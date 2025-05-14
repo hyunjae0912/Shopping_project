@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>장바구니</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+   <link rel="stylesheet" href="/css/mainCss.css">
+</head>
+<body class="bg-gray-100 p-6" th:inline="text">
+
+	<div class="navbar">
+		<ul id="menu">
+			<!-- 이부분은 판매자 권한이 있는 사람만 들어올 수 있게 하자 -->
+			<li><a href="/products/register">등록하기</a></li>
+			<li><a href="#">shop</a></li>
+			<li><a href="#">cart</a></li>
+			<li><a href="#">login</a></li>
+		</ul>
+	</div>
+
+  <div class="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold mb-6">장바구니</h1>
+
+    <table class="w-full table-auto border-t border-b text-sm">
+      <thead>
+        <tr class="bg-gray-50 text-left text-gray-600 uppercase text-xs">
+          <th class="py-3">상품정보</th>
+          <th class="py-3 text-center">수량</th>
+          <th class="py-3 text-center">가격</th>
+          <th class="py-3 text-center">합계</th>
+          <th class="py-3 text-center">삭제</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="item : ${cartItems}" class="border-b">
+          <td class="flex items-center gap-4 py-4">
+            <img th:src="${item.imgUrl}" alt="상품 이미지" class="w-20 h-20 border rounded-md" />
+            <div>
+              <p class="font-semibold">머싯는 텀블러!</p>
+              <p class="text-gray-500 text-xs">상품 ID: 548912-78415</p>
+            </div>
+          </td>
+
+          <td class="text-center">
+            <input type="number" min="1" th:value="${item.quantity}" class="w-16 text-center border rounded p-1" />
+          </td>
+
+          <td class="text-center">
+            25,000원
+          </td>
+
+          <td class="text-center font-semibold">
+            25,000원
+          </td>
+
+          <td class="text-center">
+            <button class="text-red-500 hover:underline">삭제</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+
+  </div>
+    <div class="bg-white p-6 rounded shadow mt-8">
+      <h2 class="text-lg font-bold mb-4">결제 예상 금액</h2>
+      <div class="space-y-2">
+        <div class="flex justify-between">
+          <span>총 상품금액</span>
+          <span>30,000원</span>
+        </div>
+        <div class="flex justify-between">
+          <span>배송비</span>
+          <span>3,000원</span>
+        </div>
+        <div class="flex justify-between font-bold text-xl">
+          <span>총 결제금액</span>
+          <span>33,000원</span>
+        </div>
+      </div>
+      <button class="w-full mt-6 bg-blue-600 text-white py-3 rounded hover:bg-blue-700 text-lg font-semibold">
+        결제하기
+      </button>
+    </div>
+  </div>
+</body>
+</html>

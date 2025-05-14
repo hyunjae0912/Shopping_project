@@ -49,6 +49,12 @@ public class ProductsController {
 		model.addAttribute("dto", dto);
 	}
 	
+//	@GetMapping("/modify")
+//	public void modify() {
+//		
+//	}
+	
+	
     @GetMapping("/register")
     public String registerForm() {
         return "products/register"; // templates/products/register.html

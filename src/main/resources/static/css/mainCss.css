@@ -10,15 +10,15 @@ body {
 
 /* navbar */
 .navbar{
-  height: 60px;
+  height: 30px;
   padding-left: 30px;
   padding-right: 30px;
 }
 .navbar #logo {
-  line-height: 60px;
+  line-height: 30px;
 }
 .navbar #logo img{
-  vertical-align: middle;
+  vertical-align:bottom;
 }
 
 .navbar #menu {
