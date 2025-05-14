@@ -1,4 +1,4 @@
-package com.example.demo.service;
+package com.example.demo.products;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,30 +7,24 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.demo.ShoppingProjectApplication;
-import com.example.demo.dto.ProductsDto;
-import com.example.demo.entity.Products;
-import com.example.demo.repository.ProductRepository;
+
+import com.example.demo.user.UserRepository;
 
 @Service
 public class ProductServiceImpl implements ProductService{
-
-    private final ShoppingProjectApplication shoppingProjectApplication;
 	
 	@Autowired
-	ProductRepository repository;
-
-    ProductServiceImpl(ShoppingProjectApplication shoppingProjectApplication) {
-        this.shoppingProjectApplication = shoppingProjectApplication;
-    }
+	ProductRepository productRepository;
 	
-	// 이미지 파일을 어떻게 저장하지?
+	@Autowired
+	UserRepository userRepository;
+	
 	@Override
 	public int register(ProductsDto dto) {
 		System.out.println(dto);
 		
 		Products entity = DtoToEntity(dto);
-		repository.save(entity);
+		productRepository.save(entity);
 		int newName = entity.getProductid();
 		
 		System.out.println(entity);
@@ -43,20 +37,19 @@ public class ProductServiceImpl implements ProductService{
 	
 	@Override
 	public boolean remove(int no) {
-		Optional<Products> result = repository.findById(no);
+		Optional<Products> result = productRepository.findById(no);
 		
 		if(result.isPresent()) {
-			repository.deleteById(no);
+			productRepository.deleteById(no);
 			return true;
 		}
 		return false;
 	}
 
 	
-	// 리스트 형태로 출력
 	@Override
-	public List<ProductsDto> getList(int pageNumber) {
-		List<Products> result = repository.findAll();
+	public List<ProductsDto> getList() {
+		List<Products> result = productRepository.findAll();
 		List<ProductsDto> list = new ArrayList<>();
 		
 		list = result.stream()
@@ -71,7 +64,7 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public void modify(ProductsDto dto) {
 		
-		Optional<Products> result = repository.findById(dto.getProductid());
+		Optional<Products> result = productRepository.findById(dto.getProductid());
 		
 		if(result.isPresent()) {
 			Products entity = result.get();
@@ -80,7 +73,7 @@ public class ProductServiceImpl implements ProductService{
 			entity.setImgUrl(dto.getImgUrl());
 			entity.setPrice(dto.getPrice());
 			
-			repository.save(entity);
+			productRepository.save(entity);
 			
 		}
 		
@@ -90,8 +83,19 @@ public class ProductServiceImpl implements ProductService{
 	
 	@Override
 	public ProductsDto read(int no) {
-		// TODO Auto-generated method stub
-		return null;
+		// 자세히 보기
+		Optional<Products> optional = productRepository.findById(no);
+		
+		if(optional.isPresent()) {
+			Products products = optional.get();
+			ProductsDto dto = EntityToDto(products);
+			
+			return dto;
+		}
+		else {
+			return null;
+		}
+		
 	}
 	
 	

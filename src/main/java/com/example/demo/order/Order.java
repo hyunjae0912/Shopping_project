@@ -1,6 +1,8 @@
-package com.example.demo.entity;
+package com.example.demo.order;
 
+import java.time.LocalDateTime;
 
+import com.example.demo.user.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,33 +16,22 @@ import lombok.*;
 
 @Entity
 @Getter
-@Setter
+@Setter	
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Builder
-@Table(name = "tbl_products")
-public class Products {
+@Table(name = "tbl_order")
+public class Order {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int productid;
+	int orderId;
 	
-	@Column(length = 100, nullable = false)
-	String name;
+	LocalDateTime orderDate;
 	
-	@Column(length = 10)
-	int price;
+	int totalPrice;
 	
-	
-	@Column(length = 100, nullable = false)
-	String imgUrl;
-	
-	@Column(length = 100, nullable = false)
-	String desImg;
-	
-	// 닉네임
-	// 상품 등록한 사람이 누군지 추적
 	@ManyToOne
 	@JoinColumn(name = "username")
 	User user;

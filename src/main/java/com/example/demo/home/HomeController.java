@@ -1,11 +1,11 @@
-package com.example.demo.controller;
+package com.example.demo.home;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.example.demo.service.UserService;
+import com.example.demo.user.UserService;
 
 @Controller
 public class HomeController	 {

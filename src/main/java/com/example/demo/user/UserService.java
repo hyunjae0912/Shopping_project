@@ -1,8 +1,4 @@
-package com.example.demo.service;
-
-
-import com.example.demo.dto.UserDto;
-import com.example.demo.entity.User;
+package com.example.demo.user;
 
 public interface UserService {
 	

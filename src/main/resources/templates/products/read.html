@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>상품 상세페이지</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-4">
+
+  <div class="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-md">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- 왼쪽: 이미지 영역 -->
+      
+      <div>
+        <img th:src="@{${dto.imgUrl}}" alt="상품 이미지" class="w-full rounded-md border" />
+      </div>
+
+      <!-- 오른쪽: 상품 정보 -->
+      <div class="space-y-4">
+        <h1 class="text-2xl font-bold">[[ ${ dto.name } ]]</h1>
+        <p class="text-xl text-red-600 font-semibold">
+        [[${#numbers.formatInteger(dto.price, 3, 'COMMA')}]]원</p>
+        <p class="text-sm text-gray-500">배송비 무료 | 내일 도착 예정</p>
+
+        <ul class="text-sm text-gray-700 list-disc pl-5 space-y-1">
+          <li>최대 5% 적립</li>
+          <li>쿠폰 적용 가능</li>
+          <li>30일 무료 반품</li>
+        </ul>
+
+        <div class="flex space-x-3 pt-4">
+          <button class="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded">
+            장바구니
+          </button>
+          <button class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+            바로구매
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 아래: 상세 설명 -->
+    <div class="mt-10">
+      <h2 class="text-xl font-bold mb-4">상세 설명</h2>
+      <img th:src="@{${dto.desImg}}" alt="상세 이미지" class="w-full rounded-md border" />
+      <p class="text-gray-700 mt-4">
+        이곳에는 상품에 대한 상세 설명이 들어갑니다. 크기, 재질, 사용 방법 등 다양한 정보를 넣을 수 있습니다.
+      </p>
+    </div>
+  </div>
+  </th:block>
+</body>
+</html>

@@ -1,11 +1,11 @@
 package com.example.demo.service;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.demo.dto.ProductsDto;
+import com.example.demo.products.ProductService;
+import com.example.demo.products.ProductsDto;
 
 @SpringBootTest
 public class ProductServiceTest {
@@ -21,11 +21,11 @@ public class ProductServiceTest {
 	void 값_저장() {
 		// 무조건 DB에 저장된 이름을 사용해야만 저장이 됨.
 		ProductsDto dto = ProductsDto.builder()
-				.name("키위")
-				.price(10000)
-				.imgUrl("이미지url")
+				.name("탄산수")
+				.price(9000)
+				.imgUrl("img2/탄산수.jpg")
 				.desImg("설명 url")
-				.user("홍길동")
+				.user("고길동")
 				.build();
 		
 		service.register(dto);

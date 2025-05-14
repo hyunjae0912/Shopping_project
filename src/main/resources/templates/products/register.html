@@ -3,7 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <title>파일 업로드</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+  	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  	<link rel="stylesheet" href="/css/register.css">
 </head>
+<body ng-controller="RegisterCtrl" ng-app="myApp">
+ <div class="container">
+   <div id="signup">
+      <div class="signup-screen">
+         <div class="space-bot text-center">
+            <h1>물건 등록</h1>
+           <div class="divider"></div>
+         </div>
+           <form action="/products/register" method="post" name="register" novalidate  enctype="multipart/form-data">
+	            
+	            <!-- 상품명 -->
+	        <div class="input-field col s6">
+              	<input id="first-name" type="text" class="validate" name="name"  placeholder="이름 입력" required>
+              	<label for="first-name"></label>
+            </div>
+            
+            <!-- 가격 -->
+            <div class="input-field col s6">
+              <input id="last-name" type="text" class="validate" name="price"  placeholder="가격 입력" required>
+              <label for="last-name"></label>
+             </div>
+             
+             <!-- 사진들 -->
+             <div class="input-field col s6">
+              <P>상품 사진</P>
+              <input id="imgUrl" type="file" name="imgUrl" class="validate" required>
+              <label for="imgUrl"></label>
+             </div>
+             <div class="input-field col s6">
+               <P>상품 설명 사진</P>
+               <input id=""desUrl"" type="file" name="desUrl" class="validate" required>
+               <label for=""desUrl""></label>
+              </div> 
+              <div class="space-top text-center">
+               <button ng-disabled="form-register.$invalid" class="waves-effect waves-light btn done">
+               <i class="material-icons left">done</i> Done
+               </button>
+               <button type="button" class="waves-effect waves-light btn cancel">
+               <i class="material-icons left">clear</i>Cancel
+               </button>
+              </div>
+             </form>
+           </div>
+        </div>
+    </div>
+    
+    <script>
+	    var myApp = angular.module("myApp", []);
+	    myApp.controller("RegisterCtrl", function ($scope) {
+	
+	    });
+    </script>
+    
+</body>
+</html>
+
+
+
+<!-- 
 <body>
     <h2>파일 업로드 테스트</h2>
     <form action="/products/register" method="post" enctype="multipart/form-data">
@@ -12,4 +74,4 @@
         <button type="submit">제출</button>
     </form>
 </body>
-</html>
+-->

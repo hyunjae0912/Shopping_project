@@ -1,8 +1,8 @@
-package com.example.demo.entity;
+package com.example.demo.cart;
 
-import java.time.LocalDateTime;
+import com.example.demo.products.Products;
+import com.example.demo.user.User;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,25 +12,25 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.*;
 
-@Entity
 @Getter
-@Setter	
-@AllArgsConstructor
+@Setter
 @NoArgsConstructor
-@ToString
+@AllArgsConstructor
 @Builder
-@Table(name = "tbl_order")
-public class Order {
-	
+@Entity
+@ToString
+@Table(name = "tbl_cart")
+public class Cart {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int orderId;
-	
-	LocalDateTime orderDate;
-	
-	int totalPrice;
+	int cartId;
 	
 	@ManyToOne
-	@JoinColumn(name = "username")
+	@JoinColumn(name = "product_id")
+	Products products;
+	
+	@ManyToOne
+    @JoinColumn(name = "userName")
 	User user;
+	
 }

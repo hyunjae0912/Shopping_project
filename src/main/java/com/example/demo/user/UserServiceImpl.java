@@ -1,13 +1,9 @@
-package com.example.demo.service;
+package com.example.demo.user;
 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.example.demo.dto.UserDto;
-import com.example.demo.entity.User;
-import com.example.demo.repository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -53,7 +49,6 @@ public class UserServiceImpl implements UserService {
 		Optional<User> result = repository.findById(id);
 		if(result.isPresent()) {
 			User user = result.get();
-			System.out.println(user);
 			return entityToDTO(user);
 		}
 		else {

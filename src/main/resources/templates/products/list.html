@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SimpleShop</title>
+<meta charset="utf-8" />
+ <link rel="stylesheet" href="/css/mainCss.css">
+</head>
+
+<body>
+	<div class="navbar">
+		<a href="#" id="logo"> <img src="/logo/logo.png" width="149">
+		</a>
+		<ul id="menu">
+			<!-- 이부분은 판매자 권한이 있는 사람만 들어올 수 있게 하자 -->
+			<li><a href="/products/register">등록하기</a></li>
+			<li><a href="#">shop</a></li>
+			<li><a href="#">cart</a></li>
+			<li><a href="#">login</a></li>
+		</ul>
+	</div>
+	<div class="hero-header"></div>
+
+
+	<div class="products">
+		<h3>our new products</h3>
+		<div class="product-list">
+		
+			<div th:each="dto : ${list}" class="product">
+		
+			<a th:href="@{/products/read(no = ${dto.productid})}">
+				<img th:src="@{${dto.imgUrl}}" width="225">
+				<div class="product-name">[[ ${ dto.name } ]]</div>
+				<div class="product-price">[[ ${ dto.price } ]]</div>
+			</a>
+			<div class="clearfix"></div>
+			
+			</div>
+			
+		</div>
+	</div>
+
+	<!-- 일단 남겨두기 나중에 요긴하게 쓸 것 같다. -->
+	<div class="footer">
+		<a href="http://facebook.com"> <img src="/logo/페이스북.png"
+			height="20">
+		</a> <a href="http://instagram.com"> <img src="/logo/인스타.jpg"
+			height="20">
+		</a>
+	</div>
+</body>
+</html>

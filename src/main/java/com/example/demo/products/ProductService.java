@@ -1,12 +1,8 @@
-package com.example.demo.service;
+package com.example.demo.products;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-
-import com.example.demo.dto.ProductsDto;
-import com.example.demo.entity.Products;
-import com.example.demo.entity.User;
+import com.example.demo.user.User;
 
 public interface ProductService {
 	
@@ -19,7 +15,7 @@ public interface ProductService {
 	boolean remove(int no);
 	
 	// 물건 표시
-	List<ProductsDto> getList(int pageNumber);
+	List<ProductsDto> getList();
 	
 	// 물건 수정
 	void modify(ProductsDto dto);

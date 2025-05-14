@@ -1,6 +1,4 @@
-@charset "UTF-8";
-
-    * {
+* {
   box-sizing: border-box;
 }
 
@@ -43,6 +41,13 @@ body {
   font-weight: bold;
 }
 
+.a {
+	text-decoration: none;
+}
+
+a:link{
+	color: black;
+}
 /* hero header */
 .hero-header{
   height: 450px;
@@ -81,9 +86,12 @@ body {
 }
 
 .product-name{
+  text-decoration: none;
   margin-top: 20px;
   margin-bottom: 4px;
-  
+}
+.product-price {
+	text-decoration: none;
 }
 .clearfix{
   clear: both;
