@@ -43,11 +43,15 @@
         <!-- 버튼 설정하기 -->
         <div class="flex space-x-3 pt-4">
         
-          <button
-           class="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4
-            rounded"
-            type="submit" 
-            >장바구니</button>
+			<form action="/cart/add" method="post">
+			  <input type="hidden" name="productsid" th:value="${dto.productid}" />
+			  <button
+			    class="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded"
+			    type="submit">
+			    장바구니
+			  </button>
+			</form>
+
           
           <button 
           class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4

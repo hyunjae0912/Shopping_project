@@ -17,17 +17,30 @@ public class CartController {
 	@Autowired
 	CartService cartService;
 	
-	@GetMapping
-	public String cart() {
-	    return "cart/cart"; // templates/cart/cart.html
+	@GetMapping("/cart")
+	public void cart() {
+		
 	}
 	
 	@PostMapping("/add")
 	public String addCart(@RequestParam("productId") int productId) {
 		
-		
-		
-		return null;
+	    String userName = "둘리";
+	    
+	    CartDto dto = CartDto.builder()
+	            .productsid(productId)
+	            .user(userName)
+	            .build();
+	    		
+	    
+	    int cartnum = cartService.register(dto);
+	    
+	    System.out.println(cartnum);
+	    
+	    // 일단 페이지로 이동하지않고 400에러가 나서
+	    // 내일 (05-15) 해결하기
+	    
+	    return "redirect:/cart/cart"; // 장바구니 페이지로 이동
 	}
 	
 }
