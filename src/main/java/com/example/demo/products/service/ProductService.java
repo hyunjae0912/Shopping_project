@@ -1,8 +1,10 @@
-package com.example.demo.products;
+package com.example.demo.products.service;
 
 import java.util.List;
 
-import com.example.demo.user.User;
+import com.example.demo.products.dto.ProductsDto;
+import com.example.demo.products.entity.Products;
+import com.example.demo.user.entity.User;
 
 public interface ProductService {
 	

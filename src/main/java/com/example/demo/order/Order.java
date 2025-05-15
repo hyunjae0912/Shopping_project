@@ -2,7 +2,7 @@ package com.example.demo.order;
 
 import java.time.LocalDateTime;
 
-import com.example.demo.user.User;
+import com.example.demo.user.entity.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

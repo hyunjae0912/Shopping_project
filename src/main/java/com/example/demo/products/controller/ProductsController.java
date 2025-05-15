@@ -1,7 +1,8 @@
-package com.example.demo.products;
+package com.example.demo.products.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.demo.user.UserRepository;
-import com.example.demo.user.UserService;
+import com.example.demo.products.dto.ProductsDto;
+import com.example.demo.products.repository.ProductRepository;
+import com.example.demo.products.service.ProductService;
+import com.example.demo.user.repository.UserRepository;
+import com.example.demo.user.service.UserService;
 
 
 @Controller
@@ -54,6 +58,7 @@ public class ProductsController {
 //		
 //	}
 	
+	//Principal principal
 	
     @GetMapping("/register")
     public String registerForm() {
@@ -118,11 +123,8 @@ public class ProductsController {
     	        service.register(dto);
     	        
     	        
-    	        // 5/13
-    	        // DB에 저장할 코드 추가하기
-    	        // 위에 메소드 매개변수에 html에 있는 변수 추가하기
-    	        // password는 name이랑 같이 넣고
-    	        // user는 임의로 DB에 있는 값 넣기
+    	        // 나머진 로그인 기능을 만들고 
+    	        // user이름이 로그인에 잘 나오나 확인하지
     	        
     	    }
 

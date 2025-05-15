@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.demo.cart.CartDto;
-import com.example.demo.cart.CartRepository;
-import com.example.demo.cart.CartService;
+import com.example.demo.cart.dto.CartDto;
+import com.example.demo.cart.repository.CartRepository;
+import com.example.demo.cart.service.CartService;
 
 @SpringBootTest
 public class CartServiceTest {

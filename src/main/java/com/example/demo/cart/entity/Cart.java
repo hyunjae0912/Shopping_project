@@ -1,7 +1,7 @@
-package com.example.demo.cart;
+package com.example.demo.cart.entity;
 
-import com.example.demo.products.Products;
-import com.example.demo.user.User;
+import com.example.demo.products.entity.Products;
+import com.example.demo.user.entity.User;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

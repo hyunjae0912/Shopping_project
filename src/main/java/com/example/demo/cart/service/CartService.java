@@ -1,7 +1,9 @@
-package com.example.demo.cart;
+package com.example.demo.cart.service;
 
-import com.example.demo.products.Products;
-import com.example.demo.user.User;
+import com.example.demo.cart.dto.CartDto;
+import com.example.demo.cart.entity.Cart;
+import com.example.demo.products.entity.Products;
+import com.example.demo.user.entity.User;
 
 public interface CartService {
 	

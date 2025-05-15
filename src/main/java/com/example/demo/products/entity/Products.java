@@ -1,8 +1,8 @@
-package com.example.demo.products;
+package com.example.demo.products.entity;
 
 
 
-import com.example.demo.user.User;
+import com.example.demo.user.entity.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,4 +1,4 @@
-package com.example.demo.user;
+package com.example.demo.user.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.demo.config.SecurityConfig;
+import com.example.demo.user.dto.UserDto;
+import com.example.demo.user.service.UserService;
 
 @Controller
 public class UserController {

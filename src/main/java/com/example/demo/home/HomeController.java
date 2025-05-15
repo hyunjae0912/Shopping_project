@@ -8,9 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.example.demo.products.ProductService;
-import com.example.demo.products.ProductsDto;
-import com.example.demo.user.UserService;
+import com.example.demo.products.dto.ProductsDto;
+import com.example.demo.products.service.ProductService;
+import com.example.demo.user.service.UserService;
 
 @Controller
 public class HomeController	 {

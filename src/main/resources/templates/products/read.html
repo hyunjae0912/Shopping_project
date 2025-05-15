@@ -5,19 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>상품 상세페이지</title>
   <script src="https://cdn.tailwindcss.com"></script>
- <link rel="stylesheet" href="/css/mainCss.css">
+ 	<link rel="stylesheet" href="/css/mainCss.css">
 </head>
 <body class="bg-gray-100 p-4">
 
-	<div class="navbar">
-		<ul id="menu">
-			<!-- 이부분은 판매자 권한이 있는 사람만 들어올 수 있게 하자 -->
-			<li><a href="/products/register">등록하기</a></li>
-			<li><a href="#">shop</a></li>
-			<li><a href="#">cart</a></li>
-			<li><a href="#">login</a></li>
-		</ul>
-	</div>
+    <nav class="navbar">	
+      <div class="nav_logo">
+        <i class="fa-solid fa-star"></i>
+        <a href="">Let's go see the <span>stars !</span></a>
+      </div>
+      <ul class="nav_menu">
+        <li><a href="">Home</a></li>
+        <li><a href="">Location Information</a></li>
+        <li><a href="">Weather Information</a></li>
+        <li><a href="">FQA</a></li>
+        <li><a href="">Review</a></li>
+      </ul>
+    </nav>
 	
   <div class="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-md">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -43,8 +47,9 @@
         <!-- 버튼 설정하기 -->
         <div class="flex space-x-3 pt-4">
         
-			<form action="/cart/add" method="post">
-			  <input type="hidden" name="productsid" th:value="${dto.productid}" />
+        	<!-- 장바구니 보낼 때 상품 아이디를 보내서 추가할 예정 -->
+			<form action="/cart/cart" method="post">
+			  <input type="hidden" name="productId" th:value="${dto.productid}" />
 			  <button
 			    class="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded"
 			    type="submit">

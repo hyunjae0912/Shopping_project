@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.demo.user.UserDto;
-import com.example.demo.user.UserRepository;
-import com.example.demo.user.UserService;
+import com.example.demo.user.dto.UserDto;
+import com.example.demo.user.repository.UserRepository;
+import com.example.demo.user.service.UserService;
 
 @SpringBootTest
 public class UserServiceTest {
