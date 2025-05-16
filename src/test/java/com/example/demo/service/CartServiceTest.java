@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -44,6 +46,20 @@ public class CartServiceTest {
 		}
 		else {
 			System.out.println("안지워짐");
+		}
+	}
+	
+	@Test
+	void 데이터찾기() {
+		// 이름만 넣으면 다 나옴
+		// 히히신기하다
+		
+		// 없는 값
+		//List<CartDto> list = service.read("박춘자");
+		List<CartDto> list = service.read("둘리");
+		
+		for(int i = 0; i < list.size(); i++) {
+			System.out.println(list.get(i));
 		}
 	}
 }

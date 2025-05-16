@@ -25,8 +25,6 @@ import com.example.demo.user.service.UserService;
 @RequestMapping("/products")
 public class ProductsController {
 	
-	// 이미지 파일에 저장 성공 이제 이 경로를 DB에만 넣으면 됨
-	
 	@Autowired
 	ProductService service;
 	
@@ -46,6 +44,7 @@ public class ProductsController {
 		model.addAttribute("list", list);
 	}
 	
+	
 	// 보기를 누르면 상세화면을 넘어감
 	@GetMapping("/read")
 	public void read(@RequestParam(name = "no") int productid, Model model) {
@@ -53,15 +52,105 @@ public class ProductsController {
 		model.addAttribute("dto", dto);
 	}
 	
-//	@GetMapping("/modify")
-//	public void modify() {
-//		
-//	}
+	
+	
+	
+	@GetMapping("/modify")
+	public void modify(@RequestParam(name = "no") int productid, Model model) {
+		ProductsDto dto = service.read(productid);
+		model.addAttribute("dto" ,dto);
+	}
+	
+	@PostMapping("/modify")
+	public String modifyChange(    	   
+			@RequestParam("productid") int productid,
+    		@RequestParam("name") String name, 
+    		@RequestParam("price") int price,
+    		@RequestParam("imgUrl") MultipartFile imgUrl,
+    		@RequestParam("desImg") MultipartFile desImg) throws Exception{
+    	
+    	
+    	ProductsDto dto = service.read(productid);
+    	
+    	
+    	String imgPath = dto.getImgUrl();
+    	String desPath = dto.getDesImg();
+        // 새 이미지가 업로드된 경우에만 처리
+    	
+        if (imgUrl != null && !imgUrl.isEmpty()) {
+            // 기존 파일 삭제
+            String realPathOldImg = 
+            		"D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\" + dto.getImgUrl();
+            
+            File oldImgFile = new File(realPathOldImg);
+            if (oldImgFile.exists()) {
+                oldImgFile.delete(); // 삭제
+            }
+            
+            String uploadImgPath = 
+            "D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\imgUrl\\";
+            File saveFileImg = new File(uploadImgPath + imgUrl.getOriginalFilename());
+            saveFileImg.getParentFile().mkdirs();
+            imgUrl.transferTo(saveFileImg);
+
+            imgPath = "/imgUrl/" + imgUrl.getOriginalFilename(); // 새로운 경로로 변경
+        }
+        
+
+        if (desImg != null && !desImg.isEmpty()) {
+        	// 기존 파일 삭제
+        	String realPathOldImg = 
+        			"D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\" + dto.getDesImg();
+        	
+        	File oldImgFile = new File(realPathOldImg);
+        	if(oldImgFile.exists()) {
+        		oldImgFile.delete();
+        	}
+        	
+            String uploadDesPath = 
+            "D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\desUrl\\";
+            File saveFileDes = new File(uploadDesPath + desImg.getOriginalFilename());
+            saveFileDes.getParentFile().mkdirs();
+            desImg.transferTo(saveFileDes);
+
+            desPath = "/desUrl/" + desImg.getOriginalFilename(); // 새로운 경로로 변경
+        }
+        
+        String username = dto.getUser();
+        
+        ProductsDto newDto = ProductsDto
+        		.builder()
+        		.productid(productid)	// 빠져있었음
+        		.name(name)
+        		.price(price)
+        		.imgUrl(imgPath)
+        		.desImg(desPath)
+        		.user(username)
+        		.build();
+        
+        service.modify(newDto);
+        
+        System.out.println("가격 : " + price);
+        System.out.println("상품이름 : " + name);
+        System.out.println("유저 이름 : " + username);
+        System.out.println("이미지 경로 : " + imgPath);
+        System.out.println("설명 이미지 경로 : " + desPath);
+        
+        
+    	
+        return "redirect:/products/list";
+	}
+	
+	
+	
+	
 	
 	//Principal principal
 	
     @GetMapping("/register")
-    public String registerForm() {
+    public String registerForm(){
+    	
+    	
         return "products/register"; // templates/products/register.html
     }
 
@@ -84,32 +173,16 @@ public class ProductsController {
     	        
     	        File saveFileImg = new File(uploadimgUrl + imgUrl.getOriginalFilename());
     	        File saveFileDes = new File(uploaddesImg + desUrl.getOriginalFilename());
-    	        
-    	        System.out.println(imgUrl.getOriginalFilename());
-    	        System.out.println(desUrl.getOriginalFilename());
-    	        
+   	        
     	        saveFileImg.getParentFile().mkdirs();
     	        saveFileDes.getParentFile().mkdirs();
     	        imgUrl.transferTo(saveFileImg);
     	        desUrl.transferTo(saveFileDes);
     	        
-
-    	        // 파일이 저장된 위치 출력
-    	        System.out.println("물건 사진 이미지 저장 위치: " + saveFileImg.getAbsolutePath());
-
     	        // 저장된 파일의 상대 경로를 DB에 저장
     	        String filePathimgUrl = "/imgUrl/" + imgUrl.getOriginalFilename(); // 상대 경로로 변경
     	        String filePathdesUrl = "/desUrl/" + desUrl.getOriginalFilename();
-    	        
-    	        // 값을 잘 들어옴
-    	        System.out.println(filePathimgUrl);
-    	        System.out.println(filePathdesUrl);
-    	        System.out.println(name);
-    	        System.out.println(price);
-    	        
-    	        
     	        String username = userService.read("둘리").getUserName();
-    	        System.out.println(username);
     	        
     	        ProductsDto dto = ProductsDto
     	        		.builder()
@@ -121,11 +194,6 @@ public class ProductsController {
     	        		.build();
     	        
     	        service.register(dto);
-    	        
-    	        
-    	        // 나머진 로그인 기능을 만들고 
-    	        // user이름이 로그인에 잘 나오나 확인하지
-    	        
     	    }
 
     	    return "redirect:/products/list"; // 저장 후 다시 폼으로 이동

@@ -1,5 +1,7 @@
 package com.example.demo.cart.dto;
 
+import com.example.demo.products.entity.Products;
+
 import lombok.*;
 
 @Getter
@@ -17,4 +19,6 @@ public class CartDto {
 	
 	// 이 쇼핑몰을 이용하는 이용자 이름을 가져옴
 	String user;
+	
+	Products products;
 }

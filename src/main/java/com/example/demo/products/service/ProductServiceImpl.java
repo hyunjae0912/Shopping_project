@@ -66,14 +66,22 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public void modify(ProductsDto dto) {
 		
+		// 파일은 바뀌었지만 DB에 저장이 안된다.
+		
 		Optional<Products> result = productRepository.findById(dto.getProductid());
+		
+		// result = oprional.empty
+		System.out.println(result);
 		
 		if(result.isPresent()) {
 			Products entity = result.get();
 			
 			entity.setImgUrl(dto.getImgUrl());
-			entity.setImgUrl(dto.getImgUrl());
+			entity.setDesImg(dto.getDesImg());;
 			entity.setPrice(dto.getPrice());
+			entity.setName(dto.getName());
+			
+			System.out.println(entity);
 			
 			productRepository.save(entity);
 			

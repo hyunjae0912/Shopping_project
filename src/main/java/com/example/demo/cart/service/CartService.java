@@ -1,5 +1,7 @@
 package com.example.demo.cart.service;
 
+import java.util.List;
+
 import com.example.demo.cart.dto.CartDto;
 import com.example.demo.cart.entity.Cart;
 import com.example.demo.products.entity.Products;
@@ -13,6 +15,8 @@ public interface CartService {
 	// 지우기
 	boolean remove(int no);
 	
+	// 이름찾아 표시하기
+	List<CartDto> read(String userName);
 	
 	default CartDto entityToDto(Cart cart) {
 		String user = cart.getUser().getUserName();
