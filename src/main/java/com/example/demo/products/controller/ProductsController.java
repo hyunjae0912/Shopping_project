@@ -52,7 +52,12 @@ public class ProductsController {
 		model.addAttribute("dto", dto);
 	}
 	
-	
+	@PostMapping("/remove")
+	public String remove(@RequestParam(name = "no") int productid) {
+		service.remove(productid);
+		
+		return "redirect:/products/list";
+	}
 	
 	
 	@GetMapping("/modify")

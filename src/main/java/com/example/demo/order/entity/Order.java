@@ -1,6 +1,9 @@
-package com.example.demo.order;
+package com.example.demo.order.entity;
 
 import java.time.LocalDateTime;
+
+import org.eclipse.jdt.internal.compiler.ast.FalseLiteral;
+import org.springframework.data.annotation.CreatedDate;
 
 import com.example.demo.user.entity.User;
 
@@ -28,9 +31,16 @@ public class Order {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int orderId;
 	
+	@CreatedDate
 	LocalDateTime orderDate;
 	
 	int totalPrice;
+	
+	@Column(length = 100, nullable = false)
+	String addr;
+	
+	@Column(length = 20, nullable = false)
+	String status;
 	
 	@ManyToOne
 	@JoinColumn(name = "username")

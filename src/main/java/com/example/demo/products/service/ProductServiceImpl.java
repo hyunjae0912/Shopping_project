@@ -67,7 +67,6 @@ public class ProductServiceImpl implements ProductService{
 	public void modify(ProductsDto dto) {
 		
 		// 파일은 바뀌었지만 DB에 저장이 안된다.
-		
 		Optional<Products> result = productRepository.findById(dto.getProductid());
 		
 		// result = oprional.empty
