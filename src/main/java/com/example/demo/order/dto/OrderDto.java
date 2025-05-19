@@ -2,6 +2,8 @@ package com.example.demo.order.dto;
 
 import java.time.LocalDateTime;
 
+import com.example.demo.cart.entity.Cart;
+
 import lombok.*;
 
 @Getter

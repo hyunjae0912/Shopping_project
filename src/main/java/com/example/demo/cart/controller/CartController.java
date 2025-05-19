@@ -32,6 +32,7 @@ public class CartController {
 	
 	@GetMapping("/cart")
 	public void cart(Model model) {
+		
 		//String name = principal.getName();
 		String userName = "둘리";
 		
@@ -43,7 +44,9 @@ public class CartController {
 			int dtonum = dto.getProducts().getPrice();
 			total += dtonum;
 		}
+		
 		System.out.println(total);
+		model.addAttribute("userName", userName);
 		model.addAttribute("list" ,list);
 		model.addAttribute("total", total);
 	}
@@ -71,6 +74,12 @@ public class CartController {
 	    System.out.println(cartnum);
 	    
 	    return "redirect:/cart/cart"; // 장바구니 페이지로 이동
+	}
+	
+	@GetMapping("/remove")
+	public String remove(@RequestParam("productid") int productid) {
+		cartService.remove(productid);		
+		return "redirect:/cart/cart";
 	}
 	
 }

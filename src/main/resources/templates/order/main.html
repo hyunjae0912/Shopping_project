@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>주문목록</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/css/mainCss.css">
+</head>
+<body>
+
+	<nav class="navbar">
+		<div class="nav_logo">
+			<i class="fa-solid fa-star"></i> <a href="/products/list"><img
+				class="logo_img" src="/logo/logo.png"></a>
+		</div>
+		<ul class="nav_menu">
+			<li><a href="/products/list">Home</a></li>
+			<li><a href="/cart/cart">Cart</a></li>
+			<li><a href="/products/register">Register</a></li>
+			<!-- 상품 더보기 -->
+			<li><a href="">More</a></li>
+			<li><a href="/order/main">My Page</a></li>
+		</ul>
+	</nav>
+	
+  <div class="max-w-5xl mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-6">주문목록</h1>
+
+    <!-- 주문 카드 -->
+    <div class="bg-white rounded shadow p-4 mb-6" th:each="dto : ${list}">
+      <!-- 상단: 주문정보 -->
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between border-b pb-3 mb-4">
+        <div class="text-sm text-gray-600">
+          <span class="font-medium">[[ ${#temporals.format(dto.orderDate, 'yyyy/MM/dd HH:mm:ss')} ]]</span>
+           | 주문번호: <span class="underline cursor-pointer">[[ ${ dto.orderId } ]]</span>
+        </div>
+        <div class="text-blue-600 font-semibold mt-2 md:mt-0">[[ ${ dto.status } ]]</div>
+      </div>
+
+      <!-- 상품 목록 (주문 1개당 여러 상품일 수 있음) -->
+      <div class="flex gap-4 mb-4">
+        <img src="https://via.placeholder.com/100" alt="상품 이미지" class="w-24 h-24 object-cover rounded">
+        <div class="flex-1">
+          <p class="font-semibold text-lg">갤럭시 버즈 2 프로 어쩌구	</p>
+          <p class="text-sm text-gray-500">색상: 그래파이트</p>
+          <p class="text-sm text-gray-500 mt-1">수량: 1개</p>
+        </div>
+        <div class="text-right min-w-[100px] font-semibold">
+          129,000원
+        </div>
+      </div>
+
+      <!-- 하단 버튼 -->
+      <div class="flex flex-wrap gap-2 mt-4 justify-end">
+        <button class="px-3 py-1 border text-sm rounded hover:bg-gray-100">주문 상세</button>
+        <button class="px-3 py-1 border text-sm rounded hover:bg-gray-100">배송 조회</button>
+      </div>
+    </div>
+
+    <!-- 추가 주문도 위 구조로 반복 -->
+  </div>
+</body>
+</html>

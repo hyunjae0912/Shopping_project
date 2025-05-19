@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>파일 업로드</title>
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+	rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link rel="stylesheet" href="/css/register.css">
+</head>
+<body ng-controller="RegisterCtrl" ng-app="myApp">
+
+
+	<div class="container">
+		<div id="signup">
+			<div class="signup-screen">
+				<div class="space-bot text-center">
+					<h1>물건 등록</h1>
+					<div class="divider"></div>
+				</div>
+				
+				<!-- 카트에서 가져올 것
+					유저이름, totalprice가 필요함 어떻게 가져오기?
+				 -->
+				
+				
+				<form action="/products/register" method="post" name="register"
+					novalidate enctype="multipart/form-data">
+
+					<!-- 상품명 -->
+					<div class="input-field col s6">
+						<input id="addr" type="text" class="validate" name="addr"
+							placeholder="주소 입력" required> <label for="addr"></label>
+					</div>
+
+					<!-- 가격 -->
+					<div class="input-field col s6">
+						<input id="price" type="text" class="validate" name="price"
+							placeholder="가격 입력" required> <label for="price"></label>
+					</div>
+					
+					
+					<div class="space-top text-center">
+						<button ng-disabled="form-register.$invalid"
+							class="waves-effect waves-light btn done">
+							<i class="material-icons left">done</i> Done
+						</button>
+						<a href="/products/list">
+							<button type="button" class="waves-effect waves-light btn cancel">
+								<i class="material-icons left">clear</i>Cancel
+							</button>
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+</html>
+
+
+
+<!-- 
+<body>
+    <h2>파일 업로드 테스트</h2>
+    <form action="/products/register" method="post" enctype="multipart/form-data">
+        <input type="text" name="name" placeholder="이름 입력"><br><br>
+        <input type="file" name="file"><br><br>
+        <button type="submit">제출</button>
+    </form>
+</body>
+-->

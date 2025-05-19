@@ -52,11 +52,33 @@ public class ProductsController {
 		model.addAttribute("dto", dto);
 	}
 	
-	@PostMapping("/remove")
+	@GetMapping("/remove")
 	public String remove(@RequestParam(name = "no") int productid) {
-		service.remove(productid);
 		
-		return "redirect:/products/list";
+		ProductsDto dto = service.read(productid);
+		
+		// 잘 지워짐
+		
+        String realPathOldImg = 
+        "D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\" + dto.getImgUrl();
+        
+        String realPathOldDesImg =
+        "D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\" + dto.getDesImg();
+		
+        File oldImgFile = new File(realPathOldImg);
+        File oldDesFile = new File(realPathOldDesImg);
+        
+        if (oldImgFile.exists()) {
+            oldImgFile.delete();
+        }
+        
+        if(oldDesFile.exists()) {
+        	oldDesFile.delete();
+        }
+        
+		// DB에서 지우기
+		service.remove(productid);
+		return "redirect:/";
 	}
 	
 	
@@ -72,78 +94,84 @@ public class ProductsController {
     		@RequestParam("name") String name, 
     		@RequestParam("price") int price,
     		@RequestParam("imgUrl") MultipartFile imgUrl,
-    		@RequestParam("desImg") MultipartFile desImg) throws Exception{
+    		@RequestParam("desImg") MultipartFile desImg){
     	
-    	
-    	ProductsDto dto = service.read(productid);
-    	
-    	
-    	String imgPath = dto.getImgUrl();
-    	String desPath = dto.getDesImg();
-        // 새 이미지가 업로드된 경우에만 처리
-    	
-        if (imgUrl != null && !imgUrl.isEmpty()) {
-            // 기존 파일 삭제
-            String realPathOldImg = 
-            		"D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\" + dto.getImgUrl();
-            
-            File oldImgFile = new File(realPathOldImg);
-            if (oldImgFile.exists()) {
-                oldImgFile.delete(); // 삭제
-            }
-            
-            String uploadImgPath = 
-            "D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\imgUrl\\";
-            File saveFileImg = new File(uploadImgPath + imgUrl.getOriginalFilename());
-            saveFileImg.getParentFile().mkdirs();
-            imgUrl.transferTo(saveFileImg);
+		try {
+	    	
+	    	ProductsDto dto = service.read(productid);
+	    	
+	    	
+	    	String imgPath = dto.getImgUrl();
+	    	String desPath = dto.getDesImg();
+	        // 새 이미지가 업로드된 경우에만 처리
+	    	
+	        if (imgUrl != null && !imgUrl.isEmpty()) {
+	            // 기존 파일 삭제
+	            String realPathOldImg = 
+	            		"D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\" + dto.getImgUrl();
+	            
+	            File oldImgFile = new File(realPathOldImg);
+	            if (oldImgFile.exists()) {
+	                oldImgFile.delete(); // 삭제
+	            }
+	            
+	            String uploadImgPath = 
+	            "D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\imgUrl\\";
+	            File saveFileImg = new File(uploadImgPath + imgUrl.getOriginalFilename());
+	            saveFileImg.getParentFile().mkdirs();
+	            imgUrl.transferTo(saveFileImg);
 
-            imgPath = "/imgUrl/" + imgUrl.getOriginalFilename(); // 새로운 경로로 변경
-        }
-        
+	            imgPath = "/imgUrl/" + imgUrl.getOriginalFilename(); // 새로운 경로로 변경
+	        }
+	        
 
-        if (desImg != null && !desImg.isEmpty()) {
-        	// 기존 파일 삭제
-        	String realPathOldImg = 
-        			"D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\" + dto.getDesImg();
-        	
-        	File oldImgFile = new File(realPathOldImg);
-        	if(oldImgFile.exists()) {
-        		oldImgFile.delete();
-        	}
-        	
-            String uploadDesPath = 
-            "D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\desUrl\\";
-            File saveFileDes = new File(uploadDesPath + desImg.getOriginalFilename());
-            saveFileDes.getParentFile().mkdirs();
-            desImg.transferTo(saveFileDes);
+	        if (desImg != null && !desImg.isEmpty()) {
+	        	// 기존 파일 삭제
+	        	String realPathOldImg = 
+	        			"D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\" + dto.getDesImg();
+	        	
+	        	File oldImgFile = new File(realPathOldImg);
+	        	if(oldImgFile.exists()) {
+	        		oldImgFile.delete();
+	        	}
+	        	
+	            String uploadDesPath = 
+	            "D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\desUrl\\";
+	            File saveFileDes = new File(uploadDesPath + desImg.getOriginalFilename());
+	            saveFileDes.getParentFile().mkdirs();
+	            desImg.transferTo(saveFileDes);
 
-            desPath = "/desUrl/" + desImg.getOriginalFilename(); // 새로운 경로로 변경
-        }
-        
-        String username = dto.getUser();
-        
-        ProductsDto newDto = ProductsDto
-        		.builder()
-        		.productid(productid)	// 빠져있었음
-        		.name(name)
-        		.price(price)
-        		.imgUrl(imgPath)
-        		.desImg(desPath)
-        		.user(username)
-        		.build();
-        
-        service.modify(newDto);
-        
-        System.out.println("가격 : " + price);
-        System.out.println("상품이름 : " + name);
-        System.out.println("유저 이름 : " + username);
-        System.out.println("이미지 경로 : " + imgPath);
-        System.out.println("설명 이미지 경로 : " + desPath);
-        
-        
-    	
-        return "redirect:/products/list";
+	            desPath = "/desUrl/" + desImg.getOriginalFilename(); // 새로운 경로로 변경
+	        }
+	        
+	        String username = dto.getUser();
+	        
+	        ProductsDto newDto = ProductsDto
+	        		.builder()
+	        		.productid(productid)	// 빠져있었음
+	        		.name(name)
+	        		.price(price)
+	        		.imgUrl(imgPath)
+	        		.desImg(desPath)
+	        		.user(username)
+	        		.build();
+	        
+	        service.modify(newDto);
+	        
+	        System.out.println("가격 : " + price);
+	        System.out.println("상품이름 : " + name);
+	        System.out.println("유저 이름 : " + username);
+	        System.out.println("이미지 경로 : " + imgPath);
+	        System.out.println("설명 이미지 경로 : " + desPath);
+	        
+	        
+	    	
+	        return "redirect:/products/list";
+		} catch (Exception e) {
+			System.out.println("error : " + e);
+			return null;
+		}
+
 	}
 	
 	

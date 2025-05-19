@@ -6,11 +6,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.demo.order.dto.OrderDto;
 import com.example.demo.order.entity.Order;
 import com.example.demo.order.repository.OrderRepository;
 
+@Service
 public class OrderServiceImpl implements OrderService{
 	
 	@Autowired
@@ -23,6 +25,7 @@ public class OrderServiceImpl implements OrderService{
 		System.out.println(dto);
 		
 		Order entity = dtoToEntity(dto);
+		
 		repository.save(entity);
 		int newNum = entity.getOrderId();
 		
@@ -62,16 +65,16 @@ public class OrderServiceImpl implements OrderService{
 	
 	@Override
 	public List<OrderDto> getUserList(String username) {
-/*		List<Order> resuList = repository.findByUser(username);
+		
+		List<Order> resutList = repository.findOrdersByUsername(username);
+		
 		List<OrderDto> list = new ArrayList<>();
 		
-		list = resuList.stream()
+		list = resutList.stream()
 				.map(entity -> entityToDto(entity))
 				.collect(Collectors.toList());
 		
 		return list;
-		*/
-		return null;
 	}
 
 	@Override

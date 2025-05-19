@@ -34,6 +34,8 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public boolean remove(int no) {
+		// 물건 번호를 지우는게 아니라 장바구니 고유 번호를 지워야함
+		System.out.println(no);
 		Optional<Cart> result = repository.findById(no);
 		
 		if(result.isPresent()) {
