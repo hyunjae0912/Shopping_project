@@ -44,6 +44,8 @@ public class OrderController {
     @GetMapping("/register")
     public String orderRegister(@RequestParam("user") String userName) {
     	
+    	// 내일(05-20) 들어온 데이터 정제해서 출력 후 다시 저장하기
+    	
     	/* 
     		OrderDto dto = OrderDto.builder( )
 			.addr("인천광역시 남동구")
