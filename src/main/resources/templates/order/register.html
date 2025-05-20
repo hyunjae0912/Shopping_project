@@ -17,31 +17,60 @@
 		<div id="signup">
 			<div class="signup-screen">
 				<div class="space-bot text-center">
-					<h1>물건 등록</h1>
+					<h1>주문확인</h1>
 					<div class="divider"></div>
 				</div>
-				
+
 				<!-- 카트에서 가져올 것
-					유저이름, totalprice가 필요함 어떻게 가져오기?
+					유저이름, total price, 상품명이 필요함 어떻게 가져오기?
 				 -->
-				
-				
-				<form action="/products/register" method="post" name="register"
+				<form action="/order/register" method="post" name="register"
 					novalidate enctype="multipart/form-data">
 
-					<!-- 상품명 -->
+					<div class="space-bot text-center">
+						<h1>상품목록</h1>
+						<div class="divider"></div>
+					</div>
+
+					<div class="order-items">
+						<div th:each="dto : ${list}">
+
+
+							<!-- 상품명 -->
+							<div class="input-field col s6">
+								<input id="name" type="text" class="validate" name="name"
+									th:value="${dto.products.name}" placeholder="이게 보이면 문의 주세요"
+									required readonly> <label for="addr"></label> <img
+									th:src="@{${dto.products.imgUrl}}" alt="상품 이미지"
+									class="w-20 h-20 border rounded-md" />
+
+							</div>
+						</div>
+
+						<div class="space-bot text-center">
+							<h1>총 가격</h1>
+							<div class="divider"></div>
+						</div>
+						<!-- 가격 -->
+						<div class="input-field col s6">
+							<input id="totalPrice" type="text" class="validate" name="totalPrice"
+								th:value="${totalPrice}"
+								placeholder="이게 보이면 문의 주세요" required readonly> <label
+								for="totalPrice"></label>
+						</div>
+					</div>
+
+					<div class="space-bot text-center">
+						<h1>추가정보</h1>
+						<div class="divider"></div>
+					</div>
+
 					<div class="input-field col s6">
 						<input id="addr" type="text" class="validate" name="addr"
 							placeholder="주소 입력" required> <label for="addr"></label>
 					</div>
+					<input type="hidden" name="userName" th:value="${userName}">
 
-					<!-- 가격 -->
-					<div class="input-field col s6">
-						<input id="price" type="text" class="validate" name="price"
-							placeholder="가격 입력" required> <label for="price"></label>
-					</div>
-					
-					
 					<div class="space-top text-center">
 						<button ng-disabled="form-register.$invalid"
 							class="waves-effect waves-light btn done">
@@ -54,6 +83,8 @@
 						</a>
 					</div>
 				</form>
+
+
 			</div>
 		</div>
 	</div>

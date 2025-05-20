@@ -76,13 +76,23 @@
       </div>
       
       <!-- 이 두 개의 값을 저 order/register에 옮길거임 -->
-      <input name="productNames" th:value="${userName}" />
-      <input name="totalPrice" th:value="${total}"/>
       
-      <!-- form태그로 값을 보내야하나? 어떻게 해야하지 -->
-      <button class="w-full mt-6 bg-blue-600 text-white py-3 rounded hover:bg-blue-700 text-lg font-semibold">
-        결제하기
-      </button>
+      <!-- form태그로 값을 보내야하나? 어떻게 해야하지
+      <form action="/order/register" method="post" name="register">
+	      <input type="hidden" name="userName" th:value="${userName}" />
+	      <input type="hidden" name="totalPrice" th:value="${total}"/>
+	      <button class="w-full mt-6 bg-blue-600 text-white py-3 rounded hover:bg-blue-700 text-lg font-semibold">
+	        결제하기
+	      </button>
+      </form>
+      -->
+      
+      <!-- 성공적으로 값은 보내짐 -->
+      <a th:href="@{/order/register(userName=${userName}, totalPrice=${total})}">
+      		<button class="w-full mt-6 bg-blue-600 text-white py-3 rounded hover:bg-blue-700 text-lg font-semibold">
+	        결제하기
+	      </button>
+      </a>
       
     </div>
 </body>

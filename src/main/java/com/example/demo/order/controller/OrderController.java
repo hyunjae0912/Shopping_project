@@ -31,18 +31,60 @@ public class OrderController {
 
 	// Principal principal
     @GetMapping("/main")
-    public String orderMain(@RequestParam("user") String userName, Model model) {
+    public String orderMain(@RequestParam("userName") String userName, Model model) {
 
         List<Cart> cartList = cartRepository.findByUser_UserName(userName);
 
         model.addAttribute("cartList", cartList);
-        model.addAttribute("user", userName);
+        model.addAttribute("userName", userName);
 
         return "order/main";
     }
     
     @GetMapping("/register")
-    public String orderRegister(@RequestParam("user") String userName) {
+    public String orderRegiser(
+    		@RequestParam("userName") String userName,
+    		@RequestParam("totalPrice") int totalPrice,
+    		Model model
+    		) {
+    	
+    	// 이름에 있는 값 찾기
+    	List<Cart> list = cartRepository.findByUser_UserName(userName);
+    	
+    	for(int i = 0; i < list.size(); i++) {
+    		System.out.println(list.get(i));
+    	}
+    	// 값 보내기
+    	model.addAttribute("userName", userName);
+    	model.addAttribute("totalPrice", totalPrice);
+    	model.addAttribute("list", list);
+    	
+    	System.out.println("username : " + userName);
+    	System.out.println("totalPrice : " + totalPrice);
+    	
+    	return null;
+    	
+    }
+    
+    @PostMapping("/register")
+    public String orderRegisterPost(
+    		@RequestParam("userName") String userName,
+    		@RequestParam("totalPrice") int totalPrice,
+    		@RequestParam("addr") String addr,
+    		
+    		Model model) {
+    	
+    	// 일단 값이 들어왔는지만 확인하기
+    	/* 잘 들어옴
+    	addr : 남동구 구월로 192
+		username : 둘리
+		totalPrice : 48000
+    	 */
+    	
+    	System.out.println("addr : " + addr);
+    	System.out.println("username : " + userName);
+    	System.out.println("totalPrice : " + totalPrice);
+    	
     	
     	// 내일(05-20) 들어온 데이터 정제해서 출력 후 다시 저장하기
     	
@@ -53,7 +95,7 @@ public class OrderController {
 			.totalPrice(20000)
 			.user("홍길동").build();
     	 */
-    	return null;
+    	return "order/main";
     }
 
 }

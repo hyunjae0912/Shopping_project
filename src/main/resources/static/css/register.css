@@ -1,6 +1,5 @@
 body {
-    min-height:100%;
-    background-color: #263238;
+    min-height:100%;;
 }
 
 .text-center{
@@ -103,3 +102,28 @@ h1 {
 }
 
 
+.order-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.item-card {
+  flex: 0 1 calc(33.333% - 16px); /* 한 줄에 최대 3개 */
+  background-color: #37474f;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  color: white;
+}
+
+.product-img {
+  width: 100%;
+  max-height: 120px;
+  object-fit: contain;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 8px;
+}

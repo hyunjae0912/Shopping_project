@@ -1,120 +1,118 @@
+:root {
+  --text-color: #000000;
+  --hover-background: #000000;
+  --hover-text: #ffffff;
+}
+
 * {
   box-sizing: border-box;
 }
 
-:root {
-  --accent-color: #f3ff87;
-  --text-color: #f0f4f5;
-  --background-color: #0b002b;}
-
-.body {
+body {
   margin: 0;
-  font-family: 'Montserrat';}
+  font-family: 'Montserrat', sans-serif;
+  color: var(--text-color);
+}
 
+/* 링크 기본 스타일 */
 a {
   text-decoration: none;
-  color: var(--text-color);}
+  color: var(--text-color);
+}
 
+/* === NAVBAR === */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--background-color);
-  padding: 8px 12px;}
-  
-  .nav_logo {
+  padding: 8px 12px;
+  border-bottom: 1px solid #ccc;
+}
+
+.nav_logo {
   font-size: 24px;
-  color: var(--text-color);}
+  color: var(--text-color);
+}
 
-.nav_logo i {
-  color: var(--accent-color);}
+.logo_img {
+  width: 200px;
+  height: 50px;
+}
 
-.nav_logo span {
-  color: var(--accent-color);}
-
+/* 메뉴 스타일 */
 .nav_menu {
   display: flex;
   list-style: none;
-  padding-left: 0;}
+  padding-left: 0;
+  margin: 0;
+}
 
 .nav_menu li {
-  padding: 8px 12px;}
+  padding: 8px 12px;
+  transition: background-color 0.3s, color 0.3s;
+}
 
+.nav_menu li a {
+  color: var(--text-color) !important;
+  font-weight: 500;
+}
+
+/* Hover 효과 */
 .nav_menu li:hover {
-  color: var(--background-color);
-  background-color: var(--accent-color);
-  border-radius: 4px;}
-
-.nav_menu li a:hover {
-  color: var(--background-color);}
- 
-.navbar_toggleBtn {
-  display: none;
-  color:var(--text-color);
-  position: absolute;
-  right: 32px;
-  font-size: 24px;}
-
-.logo_img { 
-	width: 200px;
-	height: 50px;	
+  background-color: var(--hover-background) !important;
+  border-radius: 4px;
 }
-/* hero header */
-.hero-header{
-  height: 450px;
-  background-image: url("../images/hero_header.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-}
-/* products */
 
-.products h3{
+.nav_menu li:hover a {
+  color: var(--hover-text) !important;
+}
+
+/* === PRODUCTS === */
+.products h3 {
   font-size: 24px;
-  color: #545454;
+  color: var(--text-color);
   font-weight: bold;
   margin-top: 60px;
   margin-bottom: 60px;
   text-align: center;
 }
-.product-list{
+
+.product-list {
   width: 735px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
 }
-.product{
+
+.product {
   width: 225px;
   text-align: center;
   display: block;
-  color: #545454;
-  text-decoration: none;
   float: left;
-  margin-left:10px;
-  margin-right: 10px;
-  margin-bottom: 80px;
-  
+  margin: 0 10px 80px 10px;
+  color: var(--text-color);
 }
 
-.product-name{
-  text-decoration: none;
+.product-name {
   margin-top: 20px;
   margin-bottom: 4px;
 }
+
 .product-price {
-	text-decoration: none;
+  color: #666;
+  font-size: 14px;
 }
-.clearfix{
+
+.clearfix {
   clear: both;
 }
-/* footer */
-.footer{
+
+/* === FOOTER === */
+.footer {
   text-align: center;
   margin-top: 40px;
-  margin-bottom: 80px;	
-
+  margin-bottom: 80px;
 }
-.footer a{
-  margin-left: 10px;
-  margin-right: 10px;
+
+.footer a {
+  margin: 0 10px;
   text-decoration: none;
 }

@@ -18,6 +18,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         
+        // 그 c파일로 할 때 여기에서도 fileutil도 올려야함
         http.authorizeHttpRequests()
             .requestMatchers("/user/register", "/customlogin").permitAll() // 로그인, 회원가입 페이지는 누구나 접근 가능
             .anyRequest().authenticated(); // 그 외의 요청은 인증이 필요
