@@ -3,6 +3,8 @@ package com.example.demo.cart.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.example.demo.cart.entity.Cart;
 import com.example.demo.user.entity.User;
@@ -15,5 +17,7 @@ public interface CartRepository extends JpaRepository<Cart, Integer>{
 	
     List<Cart> findByUser_UserName(String userName);  
     // "user"는 Cart 엔티티에서 User와 연결된 필드명
+    
+    void deleteByUser_UserName(String userName); // 삭제
 	
 }

@@ -93,10 +93,7 @@ public class OrderServiceImpl implements OrderService{
 			System.out.println(entity);
 			repository.save(entity);
 			
-		}
-		
-		
-		
+		}		
 	}
 
 

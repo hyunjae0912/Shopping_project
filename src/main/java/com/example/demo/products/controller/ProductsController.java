@@ -216,7 +216,7 @@ public class ProductsController {
     	        // 저장된 파일의 상대 경로를 DB에 저장
     	        String filePathimgUrl = "/imgUrl/" + imgUrl.getOriginalFilename(); // 상대 경로로 변경
     	        String filePathdesUrl = "/desUrl/" + desUrl.getOriginalFilename();
-    	        String username = userService.read("둘리").getUserName();
+    	        String username = userService.read("홍길동").getUserName();
     	        
     	        ProductsDto dto = ProductsDto
     	        		.builder()

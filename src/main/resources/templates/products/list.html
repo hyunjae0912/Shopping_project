@@ -1,33 +1,188 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<title>SimpleShop</title>
-<meta charset="utf-8" />
- <link rel="stylesheet" href="/css/mainCss.css">
+  <meta charset="UTF-8" />
+  <title>SimpleShop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 폰트어썸 CDN (아이콘) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Noto Sans KR', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      position: relative;
+      overflow-x: hidden;
+    }
+    .main-bg-shape {
+      position: absolute;
+      z-index: 0;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: rgba(85, 209, 160, 0.18);
+      top: -100px;
+      left: -100px;
+      filter: blur(4px);
+      animation: float1 10s infinite alternate;
+    }
+    .main-bg-shape2 {
+      position: absolute;
+      z-index: 0;
+      width: 300px;
+      height: 300px;
+      border-radius: 40% 60% 50% 70%;
+      background: rgba(104, 147, 246, 0.13);
+      bottom: 50px;
+      right: 0;
+      filter: blur(2px);
+      animation: float2 12s infinite alternate;
+    }
+    @keyframes float1 {
+      0% { top: -100px; left: -100px; }
+      100% { top: 0; left: 20px; }
+    }
+    @keyframes float2 {
+      0% { bottom: 50px; right: 0; }
+      100% { bottom: 30px; right: 40px; }
+    }
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 7%;
+      background: rgba(255,255,255,0.92);
+      box-shadow: 0 4px 18px 0 rgba(120,120,120,0.04);
+      position: relative;
+      z-index: 2;
+    }
+    .nav_logo img {
+      height: 38px;
+      vertical-align: middle;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px 0 rgba(120,120,120,0.07);
+    }
+    .nav_menu {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .nav_menu li a {
+      text-decoration: none;
+      font-size: 1.07rem;
+      font-weight: 600;
+      color: #393e46;
+      transition: color 0.18s;
+      padding: 5px 10px;
+      border-radius: 6px;
+    }
+    .nav_menu li a:hover {
+      background: #d8f5ee;
+      color: #38996d;
+    }
+    .products {
+      position: relative;
+      z-index: 1;
+      margin: 50px auto 0;
+      padding: 32px 0;
+      max-width: 1100px;
+      background: rgba(255,255,255,0.96);
+      border-radius: 26px;
+      box-shadow: 0 4px 24px 0 rgba(60,70,90,0.09);
+    }
+    .products h3 {
+      font-size: 2rem;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 36px;
+      letter-spacing: 2px;
+      color: #2e3d4b;
+    }
+    .product-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+    .product {
+      width: 220px;
+      background: #ffffffee;
+      border-radius: 16px;
+      box-shadow: 0 2px 10px 0 rgba(70,90,110,0.05);
+      transition: transform 0.15s, box-shadow 0.2s;
+      overflow: hidden;
+    }
+    .product:hover {
+      transform: translateY(-8px) scale(1.035);
+      box-shadow: 0 6px 24px 0 rgba(70,90,110,0.10);
+    }
+    .product img {
+      width: 100%;
+      border-radius: 14px 14px 0 0;
+      display: block;
+      background: #f7fafc;
+      height: 180px;
+      object-fit: cover;
+    }
+    .product-name {
+      font-size: 1.13rem;
+      font-weight: 500;
+      padding: 12px 14px 0 14px;
+      color: #333e4b;
+    }
+    .product-price {
+      padding: 8px 14px 12px 14px;
+      color: #429585;
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .clearfix { clear: both; }
+    .footer {
+      margin: 60px auto 24px;
+      text-align: center;
+      opacity: 0.75;
+      z-index: 2;
+      position: relative;
+    }
+    .footer img {
+      margin: 0 10px;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px 0 rgba(120,120,120,0.11);
+    }
+    @media (max-width: 900px) {
+      .product-list { flex-direction: column; align-items: center; }
+      .navbar { flex-direction: column; gap: 16px; }
+      .products { padding: 18px 4vw; }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="main-bg-shape"></div>
+  <div class="main-bg-shape2"></div>
 
-	<nav class="navbar">
-		<div class="nav_logo">
-			<i class="fa-solid fa-star"></i> <a href="/products/list"><img
-				class="logo_img" src="/logo/logo.png"></a>
-		</div>
-		<ul class="nav_menu">
-			<li><a href="/products/list">Home</a></li>
-			<li><a href="/cart/cart">Cart</a></li>
-			<li><a href="/products/register">Register</a></li>
-			<!-- 상품 더보기 -->
-			<li><a href="">More</a></li>
-			<li><a href="">My Page</a></li>
-		</ul>
-	</nav>
+  <nav class="navbar">
+    <div class="nav_logo">
+      <a href="/products/list">
+        <img class="logo_img" src="/logo/logo.png" alt="SimpleShop 로고">
+      </a>
+    </div>
+    <ul class="nav_menu">
+      <li><a href="/products/list">Home</a></li>
+      <li><a href="/cart/cart">Cart</a></li>
+      <li><a href="/products/register">Register</a></li>
+      <li><a href="/order/main">Order Page</a></li>
+      <li><a href="">More</a></li>
+      <li><a href="">My Page</a></li>
+    </ul>
+  </nav>
 
-
-	<div class="products">
-		<h3>our new products</h3>
-		<div class="product-list">
-		
+  <div class="products">
+    <h3>our new products</h3>
+    <div class="product-list">
+      <!-- 반복문 부분은 예시로 아래처럼 한 개만 둠 -->
 			<div th:each="dto : ${list}" class="product">
 		
 			<a th:href="@{/products/read(no = ${dto.productid})}">
@@ -38,17 +193,13 @@
 			<div class="clearfix"></div>
 			
 			</div>
-			
-		</div>
-	</div>
+      <!-- ...여기에 상품 반복 -->
+    </div>
+  </div>
 
-	<!-- 일단 남겨두기 나중에 요긴하게 쓸 것 같다. -->
-	<div class="footer">
-		<a href="http://facebook.com"> <img src="/logo/페이스북.png"
-			height="20">
-		</a> <a href="http://instagram.com"> <img src="/logo/인스타.jpg"
-			height="20">
-		</a>
-	</div>
+  <div class="footer">
+    <a href="http://facebook.com"><img src="/logo/페이스북.png" height="20"></a>
+    <a href="http://instagram.com"><img src="/logo/인스타.jpg" height="20"></a>
+  </div>
 </body>
 </html>

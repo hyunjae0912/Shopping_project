@@ -1,96 +1,136 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>상품 상세페이지</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="/css/mainCss.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>상품 상세페이지</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 폰트어썸 아이콘 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #b4d6ee 100%);
+    }
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 7%;
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 4px 18px 0 rgba(120,120,120,0.05);
+      position: relative;
+      z-index: 2;
+      margin-bottom: 36px;
+    }
+    .nav_logo img {
+      height: 38px;
+      vertical-align: middle;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px 0 rgba(120,120,120,0.07);
+    }
+    .nav_menu {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .nav_menu li a {
+      text-decoration: none;
+      font-size: 1.07rem;
+      font-weight: 600;
+      color: #393e46;
+      transition: color 0.18s;
+      padding: 5px 10px;
+      border-radius: 6px;
+    }
+    .nav_menu li a:hover {
+      background: #d8f5ee;
+      color: #38996d;
+    }
+    @media (max-width: 900px) {
+      .navbar { flex-direction: column; gap: 16px; }
+    }
+  </style>
 </head>
-<body class="bg-gray-100 p-4">
+<body>
+  <nav class="navbar">
+    <div class="nav_logo">
+      <i class="fa-solid fa-star" style="color:#4fa2e2;"></i>
+      <a href="/products/list">
+        <img class="logo_img" src="/logo/logo.png" alt="SimpleShop 로고">
+      </a>
+    </div>
+    <ul class="nav_menu">
+      <li><a href="/products/list">Home</a></li>
+      <li><a href="/cart/cart">Cart</a></li>
+      <li><a href="/products/register">Register</a></li>
+      <li><a href="/order/main">Order Page</a></li>
+      <li><a href="">More</a></li>
+      <li><a href="">My Page</a></li>
+    </ul>
+  </nav>
 
-	<nav class="navbar">
-		<div class="nav_logo">
-			<i class="fa-solid fa-star"></i> <a href="/products/list"><img
-				class="logo_img" src="/logo/logo.png"></a>
-		</div>
-		<ul class="nav_menu">
-			<li><a href="/products/list">Home</a></li>
-			<li><a href="/cart/cart">Cart</a></li>
-			<li><a href="/products/register">Register</a></li>
-			<!-- 상품 더보기 -->
-			<li><a href="">More</a></li>
-			<li><a href="">My Page</a></li>
-		</ul>
-	</nav>
-
-	<div class="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-md">
-		<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-			<!-- 왼쪽: 이미지 영역 -->
-
-			<div>
-				<img th:src="@{${dto.imgUrl}}" alt="상품 이미지"
-					class="w-full rounded-md border" />
-			</div>
-
-			<!-- 오른쪽: 상품 정보 -->
-			<div class="space-y-4">
-				<h1 class="text-2xl font-bold">[[ ${ dto.name } ]]</h1>
-				<p class="text-xl text-red-600 font-semibold">
-					[[${#numbers.formatInteger(dto.price, 3, 'COMMA')}]]원</p>
-				<p class="text-sm text-gray-500">배송비 무료 | 내일 도착 예정</p>
-				<p class="text-sm text-grat-400">[[ ${ dto.user } ]]</p>
-				<ul class="text-sm text-gray-700 list-disc pl-5 space-y-1">
-					<li>최대 5% 적립</li>
-					<li>쿠폰 적용 가능</li>
-					<li>30일 무료 반품</li>
-				</ul>
-
-				<!-- 버튼 설정하기 -->
-				<div class="flex space-x-3 pt-4">
-
-					<!-- 장바구니 보낼 때 상품 아이디를 보내서 추가할 예정 -->
-					<form action="/cart/cart" method="post">
-						<input type="hidden" name="productId" th:value="${dto.productid}" />
-						<button
-							class="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded"
-							type="submit">장바구니</button>
-					</form>
-
-
-					<button
-						class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4
-           rounded">
-
-						바로구매</button>
-				</div>
-			</div>
-		</div>
-
-		<!-- 아래: 상세 설명 -->
-		<div class="mt-10">
-			<h2 class="text-xl font-bold mb-4">상세 설명</h2>
-			<img th:src="@{${dto.desImg}}" alt="상세 이미지"
-				class="w-full rounded-md border" />
-		</div>
-			
-
-		<a th:href="@{/products/modify(no=${dto.productid})}">
-			<button
-				class="bg-yellow-400 hover:bg-red-50 text-black font-bold py-2 px-4 rounded"
-				type="submit">수정하기</button>
-		</a>
-		
-		<a th:href="@{/products/remove(no=${dto.productid})}">
-			<button	
-				class="bg-yellow-400 hover:bg-red-50 text-black font-bold py-2 px-4 rounded"
-				type="submit">지우기</button>
-		</a>
-
-	</div>
-
-
-
-
+  <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl px-8 py-10 mt-6 mb-14">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- 상품 이미지 -->
+      <div>
+        <img th:src="@{${dto.imgUrl}}" alt="상품 이미지"
+          class="w-full rounded-2xl border shadow-sm object-cover bg-gray-100 aspect-[4/3]" />
+      </div>
+      <!-- 상품 정보 -->
+      <div class="flex flex-col justify-between space-y-6">
+        <div>
+          <h1 class="text-3xl font-bold text-[#21706e] mb-3">[[ ${ dto.name } ]]</h1>
+          <p class="text-2xl text-[#fd5f5c] font-bold mb-2">
+            [[${#numbers.formatInteger(dto.price, 3, 'COMMA')}]]<span class="text-lg">원</span>
+          </p>
+          <p class="text-sm text-gray-500 mb-1">배송비 무료 | 내일 도착 예정</p>
+          <p class="text-sm text-gray-400 mb-4">판매자: [[ ${ dto.user } ]]</p>
+          <ul class="text-sm text-gray-700 list-disc pl-5 space-y-1 mb-5">
+            <li>최대 5% 적립</li>
+            <li>쿠폰 적용 가능</li>
+            <li>30일 무료 반품</li>
+          </ul>
+        </div>
+        <!-- 버튼 -->
+        <div class="flex space-x-3 pt-2">
+          <form action="/cart/cart" method="post">
+            <input type="hidden" name="productId" th:value="${dto.productid}" />
+            <button
+              class="bg-gradient-to-r from-[#ffe174] to-[#ffb44d] hover:from-[#ffb44d] hover:to-[#ffe174] text-black font-bold py-2 px-6 rounded-xl shadow transition"
+              type="submit">
+              <i class="fa-solid fa-cart-plus mr-2"></i> 장바구니
+            </button>
+          </form>
+          <button
+            class="bg-gradient-to-r from-[#54d6a5] to-[#47a6fa] hover:from-[#47a6fa] hover:to-[#54d6a5] text-white font-bold py-2 px-6 rounded-xl shadow transition">
+            <i class="fa-solid fa-bolt mr-2"></i> 바로구매
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- 상세 설명 -->
+    <div class="mt-12">
+      <h2 class="text-xl font-bold text-[#375275] mb-4">상세 설명</h2>
+      <img th:src="@{${dto.desImg}}" alt="상세 이미지"
+        class="w-full rounded-2xl border shadow object-cover bg-gray-50" />
+    </div>
+    <!-- 수정/삭제 버튼 -->
+    <div class="flex space-x-4 justify-end mt-10">
+      <a th:href="@{/products/modify(no=${dto.productid})}">
+        <button
+          class="bg-gradient-to-r from-[#fff7a7] to-[#ffe174] hover:from-[#ffe174] hover:to-[#fff7a7] text-[#544e1e] font-bold py-2 px-5 rounded-xl shadow transition">
+          <i class="fa-solid fa-pen-to-square mr-1"></i> 수정하기
+        </button>
+      </a>
+      <a th:href="@{/products/remove(no=${dto.productid})}">
+        <button
+          class="bg-gradient-to-r from-[#ffd6d1] to-[#fd5f5c] hover:from-[#fd5f5c] hover:to-[#ffd6d1] text-white font-bold py-2 px-5 rounded-xl shadow transition">
+          <i class="fa-solid fa-trash mr-1"></i> 지우기
+        </button>
+      </a>
+    </div>
+  </div>
 </body>
 </html>

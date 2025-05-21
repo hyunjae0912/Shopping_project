@@ -1,107 +1,119 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>파일 업로드</title>
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
-	rel="stylesheet">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	rel="stylesheet">
-<link rel="stylesheet" href="/css/register.css">
+  <meta charset="UTF-8">
+  <title>주문확인</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 폰트어썸 아이콘 (버튼용) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #b4d6ee 100%);
+    }
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 7%;
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 4px 18px 0 rgba(120,120,120,0.05);
+      position: relative;
+      z-index: 2;
+      margin-bottom: 36px;
+    }
+    .nav_logo img {
+      height: 38px;
+      vertical-align: middle;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px 0 rgba(120,120,120,0.07);
+    }
+    .nav_menu {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .nav_menu li a {
+      text-decoration: none;
+      font-size: 1.07rem;
+      font-weight: 600;
+      color: #393e46;
+      transition: color 0.18s;
+      padding: 5px 10px;
+      border-radius: 6px;
+    }
+    .nav_menu li a:hover {
+      background: #d8f5ee;
+      color: #38996d;
+    }
+    @media (max-width: 900px) {
+      .navbar { flex-direction: column; gap: 16px; }
+    }
+  </style>
 </head>
-<body ng-controller="RegisterCtrl" ng-app="myApp">
-
-
-	<div class="container">
-		<div id="signup">
-			<div class="signup-screen">
-				<div class="space-bot text-center">
-					<h1>주문확인</h1>
-					<div class="divider"></div>
-				</div>
-
-				<!-- 카트에서 가져올 것
-					유저이름, total price, 상품명이 필요함 어떻게 가져오기?
-				 -->
-				<form action="/order/register" method="post" name="register"
-					novalidate enctype="multipart/form-data">
-
-					<div class="space-bot text-center">
-						<h1>상품목록</h1>
-						<div class="divider"></div>
-					</div>
-
-					<div class="order-items">
-						<div th:each="dto : ${list}">
-
-
-							<!-- 상품명 -->
-							<div class="input-field col s6">
-								<input id="name" type="text" class="validate" name="name"
-									th:value="${dto.products.name}" placeholder="이게 보이면 문의 주세요"
-									required readonly> <label for="addr"></label> <img
-									th:src="@{${dto.products.imgUrl}}" alt="상품 이미지"
-									class="w-20 h-20 border rounded-md" />
-
-							</div>
-						</div>
-
-						<div class="space-bot text-center">
-							<h1>총 가격</h1>
-							<div class="divider"></div>
-						</div>
-						<!-- 가격 -->
-						<div class="input-field col s6">
-							<input id="totalPrice" type="text" class="validate" name="totalPrice"
-								th:value="${totalPrice}"
-								placeholder="이게 보이면 문의 주세요" required readonly> <label
-								for="totalPrice"></label>
-						</div>
-					</div>
-
-					<div class="space-bot text-center">
-						<h1>추가정보</h1>
-						<div class="divider"></div>
-					</div>
-
-					<div class="input-field col s6">
-						<input id="addr" type="text" class="validate" name="addr"
-							placeholder="주소 입력" required> <label for="addr"></label>
-					</div>
-					<input type="hidden" name="userName" th:value="${userName}">
-
-					<div class="space-top text-center">
-						<button ng-disabled="form-register.$invalid"
-							class="waves-effect waves-light btn done">
-							<i class="material-icons left">done</i> Done
-						</button>
-						<a href="/products/list">
-							<button type="button" class="waves-effect waves-light btn cancel">
-								<i class="material-icons left">clear</i>Cancel
-							</button>
-						</a>
-					</div>
-				</form>
-
-
-			</div>
-		</div>
-	</div>
-
-
+<body>
+  <!-- 네비게이션, 기존과 동일하게 -->
+  <nav class="navbar">
+    <div class="nav_logo">
+      <i class="fa-solid fa-star" style="color:#4fa2e2;"></i>
+      <a href="/products/list">
+        <img class="logo_img" src="/logo/logo.png" alt="SimpleShop 로고">
+      </a>
+    </div>
+    <ul class="nav_menu">
+      <li><a href="/products/list">Home</a></li>
+      <li><a href="/cart/cart">Cart</a></li>
+      <li><a href="/products/register">Register</a></li>
+      <li><a href="/order/main">Order Page</a></li>
+      <li><a href="">More</a></li>
+      <li><a href="">My Page</a></li>
+    </ul>
+  </nav>
+  <!-- 주문확인 카드 -->
+  <div class="max-w-xl mx-auto bg-white rounded-3xl shadow-xl px-8 py-10 mt-6 mb-14">
+    <h1 class="text-2xl md:text-3xl font-bold text-[#21706e] mb-8 text-center">주문확인</h1>
+    <form action="/order/register" method="post" enctype="multipart/form-data" class="space-y-8">
+      <!-- 상품목록 -->
+      <section>
+        <h2 class="text-lg font-bold mb-3 text-[#38996d]">상품목록</h2>
+        <div class="divide-y">
+          <div th:each="dto : ${list}" class="flex items-center gap-4 py-3">
+            <img th:src="@{${dto.products.imgUrl}}" alt="상품 이미지"
+              class="w-16 h-16 rounded-xl border shadow-sm object-cover bg-gray-100" />
+            <input type="text" name="name" th:value="${dto.products.name}" class="bg-gray-50 rounded-lg border px-3 py-2 text-base font-semibold text-gray-600 flex-1" readonly />
+          </div>
+        </div>
+      </section>
+      <!-- 총 가격 -->
+      <section>
+        <h2 class="text-lg font-bold mb-3 text-[#38996d]">총 결제금액</h2>
+        <input type="text" id="totalPrice" name="totalPrice"
+          th:value="${totalPrice}" 
+          class="w-full bg-gray-50 rounded-lg border px-3 py-2 text-lg font-bold text-[#fd5f5c] mb-2" readonly>
+      </section>
+      <!-- 추가정보 -->
+      <section>
+        <h2 class="text-lg font-bold mb-3 text-[#38996d]">추가정보</h2>
+        <input id="addr" type="text" name="addr" placeholder="주소 입력" required
+          class="w-full bg-gray-50 rounded-lg border px-3 py-2 text-base text-gray-600 focus:ring-2 focus:ring-[#b4d6ee] outline-none" />
+        <input type="hidden" name="userName" th:value="${userName}">
+      </section>
+      <!-- 버튼 -->
+      <div class="flex gap-3 pt-4">
+        <button type="submit"
+          class="flex-1 bg-gradient-to-r from-[#54d6a5] to-[#47a6fa] hover:from-[#47a6fa] hover:to-[#54d6a5] text-white font-bold py-3 rounded-xl shadow transition text-lg flex items-center justify-center">
+          <i class="fa-solid fa-check mr-2"></i> 결제하기
+        </button>
+        <a href="/products/list" class="flex-1">
+          <button type="button"
+            class="w-full bg-[#f5f7fa] hover:bg-[#ffd6d1] text-[#38996d] font-bold py-3 rounded-xl shadow transition text-lg flex items-center justify-center">
+            <i class="fa-solid fa-times mr-2"></i> 취소
+          </button>
+        </a>
+      </div>
+    </form>
+  </div>
 </body>
 </html>
-
-
-
-<!-- 
-<body>
-    <h2>파일 업로드 테스트</h2>
-    <form action="/products/register" method="post" enctype="multipart/form-data">
-        <input type="text" name="name" placeholder="이름 입력"><br><br>
-        <input type="file" name="file"><br><br>
-        <button type="submit">제출</button>
-    </form>
-</body>
--->

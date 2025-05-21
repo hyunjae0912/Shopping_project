@@ -34,7 +34,7 @@ public class CartController {
 	public void cart(Model model) {
 		
 		//String name = principal.getName();
-		String userName = "둘리";
+		String userName = "홍길동";
 		
 		List<CartDto> list = cartService.read(userName);
 		int total = 0;
@@ -55,7 +55,7 @@ public class CartController {
 	@PostMapping("/cart")
 	public String addCart(@RequestParam("productId") int productId) {
 		
-	    String userName = "둘리";
+	    String userName = "홍길동";
 	    
 	    Products products = productRepository.findById(productId).orElse(null);
 	    

@@ -3,97 +3,139 @@
 <head>
   <meta charset="UTF-8">
   <title>장바구니</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
-   <link rel="stylesheet" href="/css/mainCss.css">
+  <!-- 폰트어썸 아이콘 (필요하면) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #b4d6ee 100%);
+    }
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 7%;
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 4px 18px 0 rgba(120,120,120,0.05);
+      position: relative;
+      z-index: 2;
+      margin-bottom: 36px;
+    }
+    .nav_logo img {
+      height: 38px;
+      vertical-align: middle;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px 0 rgba(120,120,120,0.07);
+    }
+    .nav_menu {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .nav_menu li a {
+      text-decoration: none;
+      font-size: 1.07rem;
+      font-weight: 600;
+      color: #393e46;
+      transition: color 0.18s;
+      padding: 5px 10px;
+      border-radius: 6px;
+    }
+    .nav_menu li a:hover {
+      background: #d8f5ee;
+      color: #38996d;
+    }
+    @media (max-width: 900px) {
+      .navbar { flex-direction: column; gap: 16px; }
+    }
+  </style>
 </head>
-<body class="bg-gray-100 p-6" th:inline="text">
+<body class="min-h-screen">
 
-	<nav class="navbar">
-		<div class="nav_logo">
-			<i class="fa-solid fa-star"></i> <a href="/products/list"><img
-				class="logo_img" src="/logo/logo.png"></a>
-		</div>
-		<ul class="nav_menu">
-			<li><a href="/products/list">Home</a></li>
-			<li><a href="/cart/cart">Cart</a></li>
-			<li><a href="/products/register">Register</a></li>
-			<!-- 상품 더보기 -->
-			<li><a href="">More</a></li>
-			<li><a href="">My Page</a></li>
-		</ul>
-	</nav>
+  <nav class="navbar">
+    <div class="nav_logo">
+      <i class="fa-solid fa-star" style="color:#4fa2e2;"></i>
+      <a href="/products/list">
+        <img class="logo_img" src="/logo/logo.png" alt="SimpleShop 로고">
+      </a>
+    </div>
+    <ul class="nav_menu">
+      <li><a href="/products/list">Home</a></li>
+      <li><a href="/cart/cart">Cart</a></li>
+      <li><a href="/products/register">Register</a></li>
+      <li><a href="/order/main">Order Page</a></li>
+      <li><a href="">More</a></li>
+      <li><a href="">My Page</a></li>
+    </ul>
+  </nav>
 
-  <div class="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-md">
-    <h1 class="text-2xl font-bold mb-6">장바구니</h1>
+  <div class="max-w-4xl mx-auto">
+    <div class="bg-white rounded-3xl shadow-xl p-10 mb-10">
+      <h1 class="text-3xl font-bold mb-8 text-[#21706e] text-center">장바구니</h1>
+      <div class="overflow-x-auto">
+        <table class="w-full table-auto border-t border-b border-gray-200 text-sm">
+          <thead>
+            <tr class="bg-[#e6f6fb] text-gray-700 uppercase text-xs">
+              <th class="py-3 font-semibold">상품정보</th>
+              <th class="py-3 font-semibold text-center">가격</th>
+              <th class="py-3 font-semibold text-center">삭제</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="dto : ${list}" class="border-b hover:bg-[#f4fafd] transition">
+              <td class="flex items-center gap-4 py-4">
+                <img th:src="@{${dto.products.imgUrl}}" alt="상품 이미지" class="w-20 h-20 object-cover border rounded-xl shadow" />
+                <div>
+                  <p class="font-semibold text-base">[[ ${ dto.products.name } ]]</p>
+                  <p class="text-gray-400 text-xs mt-1">상품 번호 : [[ ${ dto.products.productid } ]]</p>
+                </div>
+              </td>
+              <td class="text-center font-bold text-lg text-[#38996d]">
+                [[${#numbers.formatInteger(dto.products.price, 3, 'COMMA')}]]원
+              </td>
+              <td class="text-center">
+                <a th:href="@{/cart/remove(productid=${dto.cartId})}">
+                  <button type="button" class="bg-[#ffd6d1] hover:bg-[#fd5f5c] text-[#fd5f5c] hover:text-white font-bold py-2 px-4 rounded-xl transition-all shadow-sm">
+                    <i class="fa-solid fa-trash mr-1"></i> 삭제
+                  </button>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-    <table class="w-full table-auto border-t border-b text-sm">
-      <thead>
-        <tr class="bg-gray-50 text-left text-gray-600 uppercase text-xs">
-          <th class="py-3">상품정보</th>
-          <th class="py-3 text-center">가격</th>
-          <th class="py-3 text-center">삭제</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr th:each="dto : ${list}" class="border-b">
-          <td class="flex items-center gap-4 py-4">
-            <img th:src="@{${dto.products.imgUrl}}" alt="상품 이미지" class="w-20 h-20 border rounded-md" />
-            <div>
-              <p class="font-semibold">[[ ${ dto.products.name } ]]</p>
-              <p class="text-gray-500 text-xs">상품 번호 : [[ ${ dto.products.productid } ]]</p>
-            </div>
-          </td>
-
-          <td class="text-center">
-			[[${#numbers.formatInteger(dto.products.price, 3, 'COMMA')}]]원
-          </td>
-          <td class="text-center">
-			<a th:href="@{/cart/remove(productid=${dto.cartId})}">
-            	<button type="submit" class="text-red-500 hover:underline">삭제</button>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-
-  </div>
-    <div class="bg-white p-6 rounded shadow mt-8">
-      <h2 class="text-lg font-bold mb-4">결제 예상 금액</h2>
-      <div class="space-y-2">
-        <div class="flex justify-between">
+    <div class="bg-white rounded-3xl shadow-lg p-10 mb-14">
+      <h2 class="text-xl font-bold text-[#375275] mb-5 text-center">결제 예상 금액</h2>
+      <div class="space-y-4 max-w-md mx-auto">
+        <div class="flex justify-between text-base">
           <span>총 상품금액</span>
-          <span>[[${#numbers.formatInteger(total,3,'COMMA')}]]원</span>
+          <span class="font-semibold">[[${#numbers.formatInteger(total,3,'COMMA')}]]원</span>
         </div>
-        <div class="flex justify-between">
+        <div class="flex justify-between text-base">
           <span>배송비</span>
-		<span><del class="mr-2">3,000원</del>배송비 무료!</span>
+          <span>
+            <del class="mr-2 text-gray-400">3,000원</del>
+            <span class="text-[#38996d] font-semibold">배송비 무료!</span>
+          </span>
         </div>
-        <div class="flex justify-between font-bold text-xl">
+        <div class="flex justify-between font-bold text-2xl mt-2">
           <span>총 결제금액</span>
-          <span>[[${#numbers.formatInteger(total,3,'COMMA')}]]원</span>
+          <span class="text-[#fd5f5c]">[[${#numbers.formatInteger(total,3,'COMMA')}]]원</span>
         </div>
       </div>
-      
-      <!-- 이 두 개의 값을 저 order/register에 옮길거임 -->
-      
-      <!-- form태그로 값을 보내야하나? 어떻게 해야하지
-      <form action="/order/register" method="post" name="register">
-	      <input type="hidden" name="userName" th:value="${userName}" />
-	      <input type="hidden" name="totalPrice" th:value="${total}"/>
-	      <button class="w-full mt-6 bg-blue-600 text-white py-3 rounded hover:bg-blue-700 text-lg font-semibold">
-	        결제하기
-	      </button>
-      </form>
-      -->
-      
-      <!-- 성공적으로 값은 보내짐 -->
-      <a th:href="@{/order/register(userName=${userName}, totalPrice=${total})}">
-      		<button class="w-full mt-6 bg-blue-600 text-white py-3 rounded hover:bg-blue-700 text-lg font-semibold">
-	        결제하기
-	      </button>
-      </a>
-      
+      <div class="mt-8">
+        <a th:href="@{/order/register(userName=${userName}, totalPrice=${total})}">
+          <button class="w-full bg-gradient-to-r from-[#54d6a5] to-[#47a6fa] hover:from-[#47a6fa] hover:to-[#54d6a5] text-white py-4 rounded-xl text-lg font-bold shadow transition flex items-center justify-center">
+            <i class="fa-solid fa-credit-card mr-2"></i> 결제하기
+          </button>
+        </a>
+      </div>
     </div>
+  </div>
 </body>
 </html>
