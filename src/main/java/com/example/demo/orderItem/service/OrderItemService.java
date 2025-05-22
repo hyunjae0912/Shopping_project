@@ -2,6 +2,7 @@ package com.example.demo.orderItem.service;
 
 import java.util.List;
 
+import com.example.demo.cart.entity.Cart;
 import com.example.demo.order.entity.Order;
 import com.example.demo.orderItem.dto.OrderItemDto;
 import com.example.demo.orderItem.entity.OrderItem;
@@ -12,7 +13,9 @@ public interface OrderItemService {
 	// 저장
 	List<OrderItemDto> register(String userName, int orderId);
 	
-	OrderItemDto read(int no);
+	List<OrderItem> read(String name);
+	
+	List<Cart> getListByUserName(String userName);
 	
 	
 	default OrderItem dtoToEntity(OrderItemDto dto) {

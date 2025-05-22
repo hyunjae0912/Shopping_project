@@ -42,6 +42,9 @@ public class Products {
 	// 상세 페이지에 들어가면 표시
 	@Column(length = 100, nullable = false)
 	String desImg;
+
+	// quantity 개수 나중에 추가하기
+//	int count;
 	
 	// 닉네임
 	// 상품 등록한 사람이 누군지 추적

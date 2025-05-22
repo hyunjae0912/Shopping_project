@@ -165,6 +165,7 @@
 
   <nav class="navbar">
     <div class="nav_logo">
+      <i class="fa-solid fa-star" style="color:#4fa2e2;"></i>
       <a href="/products/list">
         <img class="logo_img" src="/logo/logo.png" alt="SimpleShop 로고">
       </a>
@@ -173,9 +174,7 @@
       <li><a href="/products/list">Home</a></li>
       <li><a href="/cart/cart">Cart</a></li>
       <li><a href="/products/register">Register</a></li>
-      <li><a href="/order/main">Order Page</a></li>
-      <li><a href="">More</a></li>
-      <li><a href="">My Page</a></li>
+      <li><a href="/mypage/main">My Page</a></li>
     </ul>
   </nav>
 
@@ -186,7 +185,7 @@
 			<div th:each="dto : ${list}" class="product">
 		
 			<a th:href="@{/products/read(no = ${dto.productid})}">
-				<img th:src="@{${dto.imgUrl}}" width="225">
+				<img th:src="@{'/uploadImg/' + ${dto.imgUrl}}" width="225">
 				<div class="product-name">[[ ${ dto.name } ]]</div>
 				<div class="product-price">[[ ${ dto.price } ]]</div>
 			</a>

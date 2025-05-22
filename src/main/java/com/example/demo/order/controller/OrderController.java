@@ -43,8 +43,8 @@ public class OrderController {
     	
     	// 메인에서 보일 예정
     	
-        List<Cart> list = cartRepository.findByUser_UserName(userName);
-
+        List<Cart> list = orderItemService.getListByUserName(userName);
+        
         model.addAttribute("list", list);
         model.addAttribute("userName", userName);
 
@@ -59,7 +59,7 @@ public class OrderController {
     	
     	// 이름에 있는 값 찾기
     	// 서비스로 옮겨야함
-    	List<Cart> list = cartRepository.findByUser_UserName(userName);
+    	List<Cart> list = orderItemService.getListByUserName(userName);
     	
 //    	for(int i = 0; i < list.size(); i++) {
 //    		System.out.println(list.get(i));

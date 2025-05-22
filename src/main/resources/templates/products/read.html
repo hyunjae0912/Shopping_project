@@ -54,6 +54,7 @@
   </style>
 </head>
 <body>
+
   <nav class="navbar">
     <div class="nav_logo">
       <i class="fa-solid fa-star" style="color:#4fa2e2;"></i>
@@ -65,9 +66,8 @@
       <li><a href="/products/list">Home</a></li>
       <li><a href="/cart/cart">Cart</a></li>
       <li><a href="/products/register">Register</a></li>
-      <li><a href="/order/main">Order Page</a></li>
       <li><a href="">More</a></li>
-      <li><a href="">My Page</a></li>
+      <li><a href="/mypage/main">My Page</a></li>
     </ul>
   </nav>
 
@@ -97,6 +97,7 @@
         <div class="flex space-x-3 pt-2">
           <form action="/cart/cart" method="post">
             <input type="hidden" name="productId" th:value="${dto.productid}" />
+            <!-- 버튼 누르면  -->
             <button
               class="bg-gradient-to-r from-[#ffe174] to-[#ffb44d] hover:from-[#ffb44d] hover:to-[#ffe174] text-black font-bold py-2 px-6 rounded-xl shadow transition"
               type="submit">

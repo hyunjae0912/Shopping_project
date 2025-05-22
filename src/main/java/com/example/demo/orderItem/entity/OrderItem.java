@@ -28,7 +28,6 @@ import lombok.ToString;
 @Setter	
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Builder
 @EntityListeners(value = { AuditingEntityListener.class }) 
 @Table(name = "tbl_orderitem")

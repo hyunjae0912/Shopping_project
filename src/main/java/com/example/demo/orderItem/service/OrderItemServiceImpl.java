@@ -32,11 +32,6 @@ public class OrderItemServiceImpl implements OrderItemService {
 	@Autowired
 	OrderItemRepository orderItemRepository;
 
-	@Override
-	public OrderItemDto read(int no) {
-		
-		return null;
-	}
 	
 	@Transactional
 	@Override
@@ -74,6 +69,25 @@ public class OrderItemServiceImpl implements OrderItemService {
 		
 		return null;
 	}
+	
+	// 카트에 있는 값 가져오기
+	@Override
+	public List<Cart> getListByUserName(String userName) {
+		
+        List<Cart> list = cartRepository.findByUser_UserName(userName);
+		
+		return list;
+	}
+
+	@Override
+	public List<OrderItem> read(String name) {
+		
+		List<OrderItem> list = orderItemRepository.findByOrder_User_UserName(name);
+		
+	    return list;
+	}
+	
+	
 
 
 }
