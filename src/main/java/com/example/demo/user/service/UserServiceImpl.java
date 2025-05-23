@@ -3,6 +3,7 @@ package com.example.demo.user.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.user.dto.UserDto;
@@ -15,8 +16,9 @@ public class UserServiceImpl implements UserService {
 	UserRepository repository;
 	
 	// 비밀번호 암호화
-//	@Autowired
-//	PasswordEncoder passwordEncoder;
+	// 보안 컨피그에서 빈을 생성함
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	
 	@Override
 	public boolean register(UserDto dto) {
@@ -33,10 +35,11 @@ public class UserServiceImpl implements UserService {
 				User entity = dtoToEntity(dto);
 				
 				// 비밀번호 암호화를 위해 가져옴
-//				String password = entity.getPassword();
-//				String enpw = passwordEncoder.encode(password);
-//				
-//				entity.setPassword(enpw);
+				String password = entity.getPassword();
+				String enpw = passwordEncoder.encode(password);
+				
+				// 비밀번호 암오화 한 걸 다시 넣으
+				entity.setPassword(enpw);
 				repository.save(entity);
 				System.out.println("저장완료");
 				return true;

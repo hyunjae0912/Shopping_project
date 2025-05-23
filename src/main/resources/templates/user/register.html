@@ -1,85 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="ko">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="" />
-<meta name="author" content="" />
-<title>Simple Sidebar - Start Bootstrap Template</title>
-<!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
-<!-- Core theme CSS (includes Bootstrap)-->
-<link href="/css/styles.css" rel="stylesheet" />
-<!-- Bootstrap core JS-->
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Core theme JS-->
-<script src="/js/scripts.js"></script>
-<!-- JS 라이브러리 추가 -->
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<style>
-body {
-	background: #efefef;
-}
-
-.input-div {
-	max-width: 680px;
-	margin-top: 80px;
-	padding: 32px;
-	background: #fff;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
-	-webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-	-moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-	box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
-}
-</style>
+  <meta charset="UTF-8">
+  <title>회원가입 | SimpleShop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #b4d6ee 100%);
+      min-height: 100vh;
+    }
+    /* 라디오 버튼 커스텀 */
+    .custom-radio:checked + label {
+      background: linear-gradient(90deg, #54d6a5 0%, #47a6fa 100%);
+      color: #fff;
+      border-color: #47a6fa;
+    }
+  </style>
 </head>
 <body>
-	<div class="row justify-content-center">
-		<div class="input-div">
-			<h1 class="mt-4">Sign Up</h1>
-			<form action="/register" method="post">
-				<div class="form-group">
-					<label>아이디</label> <input type="text" class="form-control"
-						name="userName">
-				</div>
-				<div class="form-group">
-					<label>패스워드</label> <input type="password" class="form-control"
-						name="password">
-				</div>
-				<div class="form-group">
-					<div class="form-check form-check-solid">
-						<input class="form-check-input" type="radio" id="user" name="role"
-							value="ROLE_USER" checked> <label class="form-check-label"
-							for="user">일반사용자</label>
-					</div>
-					<div class="form-check form-check-solid">
-						<input class="form-check-input" type="radio" id="seller" name="role"
-							value="ROLE_SELLER"> <label class="form-check-label"
-							 for="seller">판매자</label>
-					</div>
-				</div>
-				<button type="submit" class="btn btn-primary">등록</button>
-				<a th:href="@{/user/register}">
-				<button class="btn btn-primary">로그인 하기</button>
-				</a>
-			</form>
-		</div>
-	</div>
-
-	<!-- 회원가입에 실패하면 실패메세지를 띄우는 이벤트 처리 -->
-	<script th:inline="javascript">
-    	 	//$(document).ready(): html 문서가 생성될 때 이벤트를 처리하는 이벤트 핸들러
-			$(document).ready(function(){
-			  var msg = [[${msg}]] //실패메시지 저장
-			  if(msg != null){
-				  alert(msg); //실패메시지 팝업
-			  }
-			});
-		</script>
+  <div class="flex flex-col min-h-screen justify-center items-center">
+    <div class="w-full max-w-sm bg-white rounded-3xl shadow-xl px-8 py-10 mt-12">
+      <div class="flex flex-col items-center mb-8">
+        <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-[#54d6a5] to-[#47a6fa] flex items-center justify-center shadow-md mb-3">
+          <i class="fa-solid fa-user-plus text-white text-4xl"></i>
+        </div>
+        <h1 class="text-2xl font-bold text-[#21706e]">회원가입</h1>
+      </div>
+      <form action="/register" method="post" class="space-y-6">
+        <div>
+          <label for="userName" class="block text-sm font-semibold text-gray-600 mb-1">이름</label>
+          <input id="userName" name="userName" type="text" autocomplete="userName"
+            class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#47a6fa] outline-none transition text-base bg-gray-50" required>
+        </div>
+        <div>
+          <label for="password" class="block text-sm font-semibold text-gray-600 mb-1">비밀번호</label>
+          <input id="password" name="password" type="password" autocomplete="new-password"
+            class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#54d6a5] outline-none transition text-base bg-gray-50" required>
+        </div>
+        <!-- 권한 선택 -->
+        <div class="mt-2">
+          <span class="block text-sm font-semibold text-gray-600 mb-2">권한 선택</span>
+          <div class="flex gap-4">
+            <input class="custom-radio hidden" type="radio" id="user" name="role" value="ROLE_USER" checked>
+            <label for="user"
+              class="cursor-pointer border border-gray-300 rounded-xl px-5 py-2 font-semibold transition
+              hover:bg-[#e6f6fb] hover:text-[#47a6fa]">
+              <i class="fa-solid fa-user mr-2"></i>일반 사용자
+            </label>
+            <input class="custom-radio hidden" type="radio" id="seller" name="role" value="ROLE_SELLER">
+            <label for="seller"
+              class="cursor-pointer border border-gray-300 rounded-xl px-5 py-2 font-semibold transition
+              hover:bg-[#ffe174] hover:text-[#fd5f5c]">
+              <i class="fa-solid fa-store mr-2"></i>판매자
+            </label>
+          </div>
+        </div>
+        <button type="submit"
+          class="w-full bg-gradient-to-r from-[#54d6a5] to-[#47a6fa] hover:from-[#47a6fa] hover:to-[#54d6a5] text-white font-bold py-3 rounded-xl shadow transition text-lg flex items-center justify-center">
+          <i class="fa-solid fa-user-plus mr-2"></i> 회원가입
+        </button>
+      </form>
+      <div class="flex justify-between mt-6 text-sm">
+        <a href="/login" class="text-[#47a6fa] hover:underline font-semibold">이미 계정이 있으신가요?</a>
+      </div>
+    </div>
+    <div class="mt-10 text-gray-400 text-xs">© 2025 SimpleShop</div>
+  </div>
 </body>
 </html>

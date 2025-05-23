@@ -1,5 +1,6 @@
 package com.example.demo.orderItem.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,9 @@ public class OrderItemController {
 	
 	// Principal principal
 	@GetMapping("/main")
-	public void mypage(Model model) {
-		//String name = principal.getName();
-		String name = "홍길동";
+	public void mypage(Model model, Principal principal) {
+		String name = principal.getName();
+		
 		List<OrderItem> list = service.read(name);
 		
 		model.addAttribute("name", name);

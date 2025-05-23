@@ -38,10 +38,12 @@ public class ProductsController {
 	UserRepository userRepository;
 	
 	@GetMapping("/list")
-	public void list(Model model) {
-		List<ProductsDto> list = service.getList();
-		
-		model.addAttribute("list", list);
+	public void list(Model model, Principal principal) {
+	    List<ProductsDto> list = service.getList();
+	    String name = (principal != null) ? principal.getName() : "게스트";
+
+	    model.addAttribute("name", name);
+	    model.addAttribute("list", list);
 	}
 	
 	
@@ -175,27 +177,20 @@ public class ProductsController {
 
 	}
 	
-	
-	
-	
-	
-	//Principal principal
-	
     @GetMapping("/register")
     public String registerForm(){
-    	
-    	
         return "products/register"; // templates/products/register.html
     }
 
-    // 유저 아이디 받아오는 건 principal를 사용해서 user 가져오기
-    // 일단은 지금은 임시 아이디로 사용할 예정
     @PostMapping("/register")
     public String registerHandler(
     		@RequestParam("name") String name, 
     		@RequestParam("price") int price,
     		@RequestParam("imgUrl") MultipartFile imgUrl,
-    		@RequestParam("desUrl") MultipartFile desUrl) throws IOException {
+    		@RequestParam("desUrl") MultipartFile desUrl,
+    		Principal principal) throws IOException {
+    	
+    	String userNameSecurity = principal.getName();
     	   if (!imgUrl.isEmpty() && !desUrl.isEmpty()) {
     	        // 절대 경로로 저장
     	        String uploadimgUrl = 
@@ -216,7 +211,7 @@ public class ProductsController {
     	        // 저장된 파일의 상대 경로를 DB에 저장
     	        String filePathimgUrl = "/imgUrl/" + imgUrl.getOriginalFilename(); // 상대 경로로 변경
     	        String filePathdesUrl = "/desUrl/" + desUrl.getOriginalFilename();
-    	        String username = userService.read("둘리").getUserName();
+    	        String username = userService.read(userNameSecurity).getUserName();
     	        
     	        ProductsDto dto = ProductsDto
     	        		.builder()

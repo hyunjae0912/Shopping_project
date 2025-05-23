@@ -171,10 +171,11 @@
       </a>
     </div>
     <ul class="nav_menu">
-      <li><a href="/products/list">Home</a></li>
+      <li><a href="/">Home</a></li>
       <li><a href="/cart/cart">Cart</a></li>
       <li><a href="/products/register">Register</a></li>
       <li><a href="/mypage/main">My Page</a></li>
+      <li><span class="ml-4 font-bold text-[#21706e]">환영합니다. [[${name}]]님</span></li>
     </ul>
   </nav>
 
@@ -182,10 +183,9 @@
     <h3>our new products</h3>
     <div class="product-list">
       <!-- 반복문 부분은 예시로 아래처럼 한 개만 둠 -->
-			<div th:each="dto : ${list}" class="product">
-		
+			<div th:each="dto : ${list}" class="product">	
 			<a th:href="@{/products/read(no = ${dto.productid})}">
-				<img th:src="@{'/uploadImg/' + ${dto.imgUrl}}" width="225">
+				<img th:src="@{${dto.imgUrl}}" width="225">
 				<div class="product-name">[[ ${ dto.name } ]]</div>
 				<div class="product-price">[[ ${ dto.price } ]]</div>
 			</a>

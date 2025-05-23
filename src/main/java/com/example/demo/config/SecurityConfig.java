@@ -1,41 +1,61 @@
 package com.example.demo.config;
 
-import java.text.Normalizer.Form;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-//@EnableWebSecurity
+@EnableWebSecurity
 public class SecurityConfig {
+	
+	// 비밀번호 암호화
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		
+		return new BCryptPasswordEncoder();
+		
+	}
 
-	/*
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		
+	    http.authorizeHttpRequests()
+	        // 로그인해야만 접근 가능한 경로
+	        .requestMatchers("/cart/**", "/mypage/**").authenticated()
+	        // 등록은 권한이 판매자인 사람만 들어오게 하기
+	        .requestMatchers("/products/register")
+	        .hasAnyRole("SELLER")
+	        .anyRequest().permitAll();
+	    
+	    // 나중에 관리자만 들어올 수 있는 화면 하나 만드는게 나으려나?	    
+	    http.csrf(csrf -> csrf.disable());
+	    
+	    http.formLogin(form -> {
+	        form.loginPage("/customlogin")   // 로그인 페이지 경로
+	            .loginProcessingUrl("/login") // 로그인 폼의 action 경로
+	            .permitAll()
+	            .successHandler((request, response, authentication) -> {
+	                response.sendRedirect("/");
+	            });
+	    });
+	    
+	    
+	    http.logout(logout -> logout
+	            .logoutUrl("/logout")
+	            .logoutSuccessUrl("/")
+	            .invalidateHttpSession(true)
+	            .deleteCookies("JSESSIONID")
+	            .permitAll()
+	        );
+	    
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        
-        // 그 c파일로 할 때 여기에서도 fileutil도 올려야함
-        http.authorizeHttpRequests()
-            .requestMatchers("/user/register", "/customlogin").permitAll() // 로그인, 회원가입 페이지는 누구나 접근 가능
-            .anyRequest().authenticated(); // 그 외의 요청은 인증이 필요
+	    return http.build();
+	}
 
-        http.csrf().disable(); // 필요시 비활성화
-
-        http.formLogin(form -> {
-            form.loginPage("/customlogin")   // 로그인 페이지 경로
-                .loginProcessingUrl("/login") // 로그인 폼의 action 경로
-                .permitAll()
-                .successHandler((request, response, authentication) -> {
-                    response.sendRedirect("/home/main"); // 로그인 성공 시 /home/main으로 리디렉션
-                });
-        });
-
-        return http.build();
-    }
-    */
 }
 

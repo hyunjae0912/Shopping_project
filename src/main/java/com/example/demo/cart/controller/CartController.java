@@ -31,12 +31,11 @@ public class CartController {
 	CartService cartService;
 	
 	@GetMapping("/cart")
-	public void cart(Model model) {
+	public void cart(Model model, Principal principal) {
 		
-		//String name = principal.getName();
-		String userName = "홍길동";
+		String name = principal.getName();
 		
-		List<CartDto> list = cartService.read(userName);
+		List<CartDto> list = cartService.read(name);
 		int total = 0;
 		
 		// 물건의 총 합 더하기
@@ -46,16 +45,17 @@ public class CartController {
 		}
 		
 		System.out.println(total);
-		model.addAttribute("userName", userName);
+		model.addAttribute("userName", name);
 		model.addAttribute("list" ,list);
 		model.addAttribute("total", total);
 	}
 	
 	// Principal principal
 	@PostMapping("/cart")
-	public String addCart(@RequestParam("productId") int productId) {
+	public String addCart(@RequestParam("productId") int productId
+			,Principal principal) {
 		
-	    String userName = "홍길동";
+	    String userName = principal.getName();
 	    
 	    Products products = productRepository.findById(productId).orElse(null);
 	    
