@@ -41,7 +41,8 @@ public class ProductsController {
 	public void list(Model model, Principal principal) {
 	    List<ProductsDto> list = service.getList();
 	    String name = (principal != null) ? principal.getName() : "게스트";
-
+	    
+	    System.out.println("이름 : " + name);
 	    model.addAttribute("name", name);
 	    model.addAttribute("list", list);
 	}
