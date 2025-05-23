@@ -60,9 +60,6 @@ public class ProductsController {
 		
 		ProductsDto dto = service.read(productid);
 		
-		// 잘 지워짐
-		
-		
         String realPathOldImg = 
         "D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\" + dto.getImgUrl();
         
