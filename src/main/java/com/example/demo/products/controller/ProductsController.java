@@ -129,7 +129,7 @@ public class ProductsController {
 	        if (desImg != null && !desImg.isEmpty()) {
 	        	// 기존 파일 삭제
 	        	String realPathOldImg = 
-	        			"D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\" + dto.getDesImg();
+	        	"D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\" + dto.getDesImg();
 	        	
 	        	File oldImgFile = new File(realPathOldImg);
 	        	if(oldImgFile.exists()) {
@@ -185,11 +185,11 @@ public class ProductsController {
     		@RequestParam("name") String name, 
     		@RequestParam("price") int price,
     		@RequestParam("imgUrl") MultipartFile imgUrl,
-    		@RequestParam("desUrl") MultipartFile desUrl,
+    		@RequestParam("desImg") MultipartFile desImg,
     		Principal principal) throws IOException {
     	
     	String userNameSecurity = principal.getName();
-    	   if (!imgUrl.isEmpty() && !desUrl.isEmpty()) {
+    	   if (!imgUrl.isEmpty() && !desImg.isEmpty()) {
     	        // 절대 경로로 저장
     	        String uploadimgUrl = 
     	        "D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\imgUrl\\";
@@ -199,16 +199,16 @@ public class ProductsController {
     	    	        
     	        
     	        File saveFileImg = new File(uploadimgUrl + imgUrl.getOriginalFilename());
-    	        File saveFileDes = new File(uploaddesImg + desUrl.getOriginalFilename());
+    	        File saveFileDes = new File(uploaddesImg + desImg.getOriginalFilename());
    	        
     	        saveFileImg.getParentFile().mkdirs();
     	        saveFileDes.getParentFile().mkdirs();
     	        imgUrl.transferTo(saveFileImg);
-    	        desUrl.transferTo(saveFileDes);
-    	        
+    	        desImg.transferTo(saveFileDes);
+    	        	
     	        // 저장된 파일의 상대 경로를 DB에 저장
     	        String filePathimgUrl = "/imgUrl/" + imgUrl.getOriginalFilename(); // 상대 경로로 변경
-    	        String filePathdesUrl = "/desUrl/" + desUrl.getOriginalFilename();
+    	        String filePathdesUrl = "/desUrl/" + desImg.getOriginalFilename();
     	        String username = userService.read(userNameSecurity).getUserName();
     	        
     	        ProductsDto dto = ProductsDto

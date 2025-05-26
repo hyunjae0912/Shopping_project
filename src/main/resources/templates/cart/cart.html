@@ -63,11 +63,12 @@
       </a>
     </div>
     <ul class="nav_menu">
-      <li><a href="/products/list">Home</a></li>
+      <li><a href="/">Home</a></li>
       <li><a href="/cart/cart">Cart</a></li>
       <li><a href="/products/register">Register</a></li>
-      <li><a href="">More</a></li>
       <li><a href="/mypage/main">My Page</a></li>
+      <li><a href="/customlogin">Login</a></li>
+      <li><span class="ml-4 font-bold text-[#21706e]">환영합니다. [[${name}]]님</span></li>
     </ul>
   </nav>
   
@@ -85,13 +86,15 @@
           </thead>
           <tbody>
             <tr th:each="dto : ${list}" class="border-b hover:bg-[#f4fafd] transition">
-              <td class="flex items-center gap-4 py-4">
-                <img th:src="@{${dto.products.imgUrl}}" alt="상품 이미지" class="w-20 h-20 object-cover border rounded-xl shadow" />
-                <div>
-                  <p class="font-semibold text-base">[[ ${ dto.products.name } ]]</p>
-                  <p class="text-gray-400 text-xs mt-1">상품 번호 : [[ ${ dto.products.productid } ]]</p>
-                </div>
-              </td>
+               <td class="flex items-center gap-4 py-4">
+              <a th:href="@{ /products/read(no = ${dto.products.productid}) }">
+                 <img th:src="@{${dto.products.imgUrl}}" alt="상품 이미지" class="w-20 h-20 object-cover border rounded-xl shadow" />
+              </a>
+                 <div>
+                   <p class="font-semibold text-base">[[ ${ dto.products.name } ]]</p>
+                   <p class="text-gray-400 text-xs mt-1">상품 번호 : [[ ${ dto.products.productid } ]]</p>
+                 </div>
+               </td>
               <td class="text-center font-bold text-lg text-[#38996d]">
                 [[${#numbers.formatInteger(dto.products.price, 3, 'COMMA')}]]원
               </td>

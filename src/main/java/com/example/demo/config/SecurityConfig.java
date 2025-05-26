@@ -44,7 +44,7 @@ public class SecurityConfig {
 	            });
 	    });
 	    
-	    
+	    // 로그아웃 기능
 	    http.logout(logout -> logout
 	            .logoutUrl("/logout")
 	            .logoutSuccessUrl("/")

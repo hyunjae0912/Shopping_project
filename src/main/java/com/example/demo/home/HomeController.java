@@ -1,6 +1,7 @@
 package com.example.demo.home;
 
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +22,14 @@ public class HomeController	 {
 	@Autowired
 	ProductService productService;
 	
-	// 테스트 용도
-	// 잘 나옴
     @GetMapping("/")
-	public String list(Model model) {
+	public String list(Model model, Principal principal) {
 		List<ProductsDto> list = productService.getList();
-		
+	    String name = (principal != null) ? principal.getName() : "게스트";
+	    
+	    System.out.println("이름 : " + name);
 		model.addAttribute("list", list);
+		model.addAttribute("name", name);
 		return "products/list";
 	}
     

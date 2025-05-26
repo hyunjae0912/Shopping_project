@@ -175,6 +175,7 @@
       <li><a href="/cart/cart">Cart</a></li>
       <li><a href="/products/register">Register</a></li>
       <li><a href="/mypage/main">My Page</a></li>
+      <li><a href="/customlogin">Login</a></li>
       <li><span class="ml-4 font-bold text-[#21706e]">환영합니다. [[${name}]]님</span></li>
     </ul>
   </nav>
@@ -187,7 +188,7 @@
 			<a th:href="@{/products/read(no = ${dto.productid})}">
 				<img th:src="@{${dto.imgUrl}}" width="225">
 				<div class="product-name">[[ ${ dto.name } ]]</div>
-				<div class="product-price">[[ ${ dto.price } ]]</div>
+				<div class="product-price">[[${#numbers.formatInteger(dto.price, 3, 'COMMA')}]]원</div>
 			</a>
 			<div class="clearfix"></div>
 			
