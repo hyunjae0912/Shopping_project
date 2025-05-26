@@ -25,6 +25,9 @@ public interface ProductService {
 	// 물건 상세 조회
 	ProductsDto read(int no);
 	
+	// 물건 개수 줄이기
+	int discount(int productId);
+	
 	
 	default Products DtoToEntity(ProductsDto dto) {
 		
@@ -35,6 +38,7 @@ public interface ProductService {
 				.productid(dto.getProductid())
 				.price(dto.getPrice())
 				.name(dto.getName())
+				.count(dto.getCount())
 				.imgUrl(dto.getImgUrl())
 				.desImg(dto.getDesImg())
 				.user(user)
@@ -51,6 +55,7 @@ public interface ProductService {
 				.productid(products.getProductid())
 				.price(products.getPrice())
 				.name(products.getName())
+				.count(products.getCount())
 				.imgUrl(products.getImgUrl())
 				.desImg(products.getDesImg())
 				.user(user)

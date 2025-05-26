@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.cart.dto.CartDto;
 import com.example.demo.cart.repository.CartRepository;
 import com.example.demo.cart.service.CartService;
+import com.example.demo.products.dto.ProductsDto;
 import com.example.demo.products.entity.Products;
 import com.example.demo.products.repository.ProductRepository;
+import com.example.demo.products.service.ProductService;
 
 @Controller
 @RequestMapping("/cart")
@@ -28,12 +30,16 @@ public class CartController {
 	ProductRepository productRepository;
 	
 	@Autowired
+	ProductService productService;
+	
+	@Autowired
 	CartService cartService;
 	
 	@GetMapping("/cart")
 	public void cart(Model model, Principal principal) {
 		
 		String name = principal.getName();
+		
 		
 		List<CartDto> list = cartService.read(name);
 		int total = 0;
@@ -45,12 +51,12 @@ public class CartController {
 		}
 		
 		System.out.println(total);
-		model.addAttribute("userName", name);
+		model.addAttribute("userName", name); 	
 		model.addAttribute("list" ,list);
 		model.addAttribute("total", total);
 	}
 	
-	// Principal principal
+	
 	@PostMapping("/cart")
 	public String addCart(@RequestParam("productId") int productId
 			,Principal principal) {
@@ -59,15 +65,17 @@ public class CartController {
 	    
 	    Products products = productRepository.findById(productId).orElse(null);
 	    
+	    int num = productService.discount(productId);
+	    
 	    System.out.println(productId);
 	    System.out.println(products);
+	    System.out.println(num);
 	    
 	    CartDto dto = CartDto.builder()
 	            .productsid(productId)
 	            .user(userName)
 	            .products(products)
 	            .build();
-	    		
 	    
 	    int cartnum = cartService.register(dto);
 	    

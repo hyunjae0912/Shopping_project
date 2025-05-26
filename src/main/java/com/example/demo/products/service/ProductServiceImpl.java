@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.example.demo.cart.controller.CartController;
 import com.example.demo.products.dto.ProductsDto;
 import com.example.demo.products.entity.Products;
 import com.example.demo.products.repository.ProductRepository;
@@ -35,7 +35,6 @@ public class ProductServiceImpl implements ProductService{
 		
 		return newName;
 	}
-
 	
 	
 	@Override
@@ -64,6 +63,34 @@ public class ProductServiceImpl implements ProductService{
 	
 	
 	@Override
+	public int discount(int productId) {
+		
+		try {
+			Optional<Products> result = productRepository.findById(productId);
+			
+			System.out.println(result);
+			int nowCount;
+			
+			if(result.isPresent()) {
+				Products entity = result.get(); 
+				nowCount = entity.getCount();
+				if(nowCount > 0) {
+					entity.setCount(nowCount - 1);
+					productRepository.save(entity);
+					return entity.getCount();
+				}
+				return 0;
+			}
+			return 0;			
+		}
+		catch (Exception e) {
+			System.out.println("error : " + e);
+			return 0;
+		}		
+	}
+	
+	
+	@Override
 	public void modify(ProductsDto dto) {
 		
 		// 파일은 바뀌었지만 DB에 저장이 안된다.
@@ -79,6 +106,7 @@ public class ProductServiceImpl implements ProductService{
 			entity.setDesImg(dto.getDesImg());;
 			entity.setPrice(dto.getPrice());
 			entity.setName(dto.getName());
+			entity.setCount(dto.getCount());
 			
 			System.out.println(entity);
 			
@@ -106,5 +134,24 @@ public class ProductServiceImpl implements ProductService{
 		}
 		
 	}
+
+
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

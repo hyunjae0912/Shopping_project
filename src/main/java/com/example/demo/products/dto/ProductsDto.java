@@ -15,6 +15,8 @@ public class ProductsDto {
 	
 	int price;
 	
+	int count;
+	
 	String imgUrl;
 	
 	String desImg;

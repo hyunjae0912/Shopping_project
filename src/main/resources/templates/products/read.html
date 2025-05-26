@@ -88,6 +88,7 @@
           </p>
           <p class="text-sm text-gray-500 mb-1">배송비 무료 | 내일 도착 예정</p>
           <p class="text-sm text-gray-400 mb-4">판매자: [[ ${ dto.user } ]]</p>
+          <p class="text-sm text-gray-400 mb-4">남은 개수: [[ ${ dto.count } ]]</p>
           <ul class="text-sm text-gray-700 list-disc pl-5 space-y-1 mb-5">
             <li>최대 5% 적립</li>
             <li>쿠폰 적용 가능</li>
@@ -105,10 +106,12 @@
               <i class="fa-solid fa-cart-plus mr-2"></i> 장바구니
             </button>
           </form>
+          <form action="">
           <button
             class="bg-gradient-to-r from-[#54d6a5] to-[#47a6fa] hover:from-[#47a6fa] hover:to-[#54d6a5] text-white font-bold py-2 px-6 rounded-xl shadow transition">
             <i class="fa-solid fa-bolt mr-2"></i> 바로구매
           </button>
+          </form>
         </div>
       </div>
     </div>

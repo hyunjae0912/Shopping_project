@@ -157,9 +157,72 @@
       .navbar { flex-direction: column; gap: 16px; }
       .products { padding: 18px 4vw; }
     }
+    
+    
+    
+    
+    .slide_item {
+    	float: left;
+	    width: 1370px;
+	    height: 440px;
+	    flex-shrink: 0;
+    }
+    .wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+	}
+	
+	.box {
+	    overflow: hidden;
+	    width: 1370px;
+	    height: 440px;
+	}
+	
+	.slide_box {
+    width: calc(1370px * 4); /* 슬라이드 개수만큼 곱하기 */
+    height: 440px;
+    transition: 0.5s;
+    display: flex;
+	}
+	
+	.slide_item {
+	    float: left;
+	}
+	
+	.prev {
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+	}
+	.slide_item img {
+    width: 1370px;
+    height: 440px;
+    object-fit: cover;
+    border-radius: 0; /* 필요시 */
+}
+	
+	.prev:hover {
+	    background-color: black;
+	    color: white;
+	}
+	
+	.next {
+	    padding: 10px;
+	    border-radius: 50%;
+	    cursor: pointer;
+	}
+	
+	.next:hover {
+	    background-color: black;
+	    color: white;
+	}
   </style>
+  <script src="https://kit.fontawesome.com/516da99189.js" crossorigin="anonymous"></script>
 </head>
 <body>
+
+
   <div class="main-bg-shape"></div>
   <div class="main-bg-shape2"></div>
 
@@ -179,6 +242,31 @@
       <li><span class="ml-4 font-bold text-[#21706e]">환영합니다. [[${name}]]님</span></li>
     </ul>
   </nav>
+  
+  
+      <!-- html -->
+    <div class="wrap">
+        <div class="prev"><i class="fa-sharp fa-solid fa-arrow-left"></i></div>
+        <div class="box">
+            <div class="slide_box">
+                <div class="slide_item">
+                    <a href=""><img src="/banner/베너1.jpg" alt="1"></a>
+                </div>
+                <div class="slide_item">
+                    <a href=""><img src="/banner/베너2.png" alt="2"></a>
+                </div>
+                <div class="slide_item">
+                    <a href=""><img src="/banner/베너3.jpg" alt="3"></a>
+                </div>
+                <div class="slide_item">
+                    <a href=""><img src="/banner/베너1.jpg" alt="4"></a>
+                </div>
+            </div>
+        </div>
+        <div class="next"><i class="fa-sharp fa-solid fa-arrow-right"></i></div>
+    </div>
+    
+    
 
   <div class="products">
     <h3>our new products</h3>
@@ -193,7 +281,6 @@
 			<div class="clearfix"></div>
 			
 			</div>
-      <!-- ...여기에 상품 반복 -->
     </div>
   </div>
 
@@ -201,5 +288,37 @@
     <a href="http://facebook.com"><img src="/logo/페이스북.png" height="20"></a>
     <a href="http://instagram.com"><img src="/logo/인스타.jpg" height="20"></a>
   </div>
+  
+      <script>
+        const prev = document.querySelector('.prev');
+        const next = document.querySelector('.next');
+        const slideBox = document.querySelector('.slide_box')
+        const slide = document.querySelectorAll('.slide_item img')
+        const slideLangth = slide.length
+        let currentIndex = 0;
+
+        const moveSlide = function(num){
+            slideBox.style.transform = `translateX(${-num * 1370}px)`;
+            currentIndex = num;
+        }
+
+        prev.addEventListener('click', ()=>{
+            if(currentIndex !== 0){
+            }
+        })
+
+        next.addEventListener('click', ()=>{
+            if(currentIndex !== slideLangth -1){
+                moveSlide(currentIndex +1)
+            }
+        })
+            setInterval(()=>{
+        if(currentIndex !== slideLangth -1){
+            moveSlide(currentIndex +1);
+        } else {
+            moveSlide(0);
+        }
+    		},2000)
+    </script>
 </body>
 </html>

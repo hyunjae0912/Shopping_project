@@ -37,6 +37,7 @@ public class ProductsController {
 	@Autowired
 	UserRepository userRepository;
 	
+	
 	@GetMapping("/list")
 	public void list(Model model, Principal principal) {
 	    List<ProductsDto> list = service.getList();
@@ -50,9 +51,12 @@ public class ProductsController {
 	
 	// 보기를 누르면 상세화면을 넘어감
 	@GetMapping("/read")
-	public void read(@RequestParam(name = "no") int productid, Model model) {
+	public void read(@RequestParam(name = "no") int productid, Model model, Principal principal) {
 		ProductsDto dto = service.read(productid);
+	    String name = (principal != null) ? principal.getName() : "게스트";
+		
 		model.addAttribute("dto", dto);
+		model.addAttribute("name", name);
 	}
 	
 	@GetMapping("/remove")
@@ -159,14 +163,6 @@ public class ProductsController {
 	        
 	        service.modify(newDto);
 	        
-	        System.out.println("가격 : " + price);
-	        System.out.println("상품이름 : " + name);
-	        System.out.println("유저 이름 : " + username);
-	        System.out.println("이미지 경로 : " + imgPath);
-	        System.out.println("설명 이미지 경로 : " + desPath);
-	        
-	        
-	    	
 	        return "redirect:/products/list";
 		} catch (Exception e) {
 			System.out.println("error : " + e);

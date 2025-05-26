@@ -44,7 +44,7 @@ public class Products {
 	String desImg;
 
 	// quantity 개수 나중에 추가하기
-//	int count;
+	int count;
 	
 	// 닉네임
 	// 상품 등록한 사람이 누군지 추적
