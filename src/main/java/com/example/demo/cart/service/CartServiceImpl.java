@@ -15,15 +15,9 @@ import com.example.demo.user.entity.User;
 
 @Service
 public class CartServiceImpl implements CartService {
-
-    private final UserController userController;
-	
 	@Autowired
 	CartRepository repository;
 
-    CartServiceImpl(UserController userController) {
-        this.userController = userController;
-    }
 	
 	@Override
 	public int register(CartDto dto) {
@@ -76,9 +70,4 @@ public class CartServiceImpl implements CartService {
 		
 		return false;
 	}
-
-	
-	
-	
-	
 }

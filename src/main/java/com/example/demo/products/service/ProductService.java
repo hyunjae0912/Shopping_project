@@ -28,6 +28,8 @@ public interface ProductService {
 	// 물건 개수 줄이기
 	int discount(int productId);
 	
+	int countUp(int productId);
+	
 	
 	default Products DtoToEntity(ProductsDto dto) {
 		

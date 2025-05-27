@@ -97,21 +97,29 @@
         </div>
         <!-- 버튼 -->
         <div class="flex space-x-3 pt-2">
-          <form action="/cart/cart" method="post">
-            <input type="hidden" name="productId" th:value="${dto.productid}" />
-            <!-- 버튼 누르면  -->
-            <button
-              class="bg-gradient-to-r from-[#ffe174] to-[#ffb44d] hover:from-[#ffb44d] hover:to-[#ffe174] text-black font-bold py-2 px-6 rounded-xl shadow transition"
-              type="submit">
-              <i class="fa-solid fa-cart-plus mr-2"></i> 장바구니
-            </button>
-          </form>
-          <form action="">
+		<form action="/cart/cart" method="post">
+		  <input type="hidden" name="productId" th:value="${dto.productid}" />
+		  <button
+		    type="submit"
+		    class="flex items-center justify-center gap-2 w-full font-bold py-2 px-6 rounded-xl shadow transition
+		      bg-gradient-to-r from-[#ffe174] to-[#ffb44d] text-black
+		      hover:from-[#ffb44d] hover:to-[#ffe174]
+		      disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed disabled:shadow-none"
+		    th:disabled="${dto.count == 0}">
+		    <i class="fa-solid fa-cart-plus"
+		       th:classappend="${dto.count == 0} ? 'text-gray-400' : 'text-[#ffb44d]'"></i>
+		    <span th:text="${dto.count == 0} ? '품절' : '장바구니'"></span>
+		  </button>
+		</form>
+		<a th:href="@{/order/register(
+		    userName=${name},
+		    totalPrice=${dto.price},
+		    productId=${dto.productid})}">
           <button
             class="bg-gradient-to-r from-[#54d6a5] to-[#47a6fa] hover:from-[#47a6fa] hover:to-[#54d6a5] text-white font-bold py-2 px-6 rounded-xl shadow transition">
             <i class="fa-solid fa-bolt mr-2"></i> 바로구매
           </button>
-          </form>
+          </a> 	
         </div>
       </div>
     </div>

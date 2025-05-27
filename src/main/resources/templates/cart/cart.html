@@ -54,7 +54,9 @@
   </style>
 </head>
 <body class="min-h-screen">
-
+	<div th:if="${msg}" class="alert alert-danger">
+	    [[${msg}]]
+	</div>
   <nav class="navbar">
     <div class="nav_logo">
       <i class="fa-solid fa-star" style="color:#4fa2e2;"></i>

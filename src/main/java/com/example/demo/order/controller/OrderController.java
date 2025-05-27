@@ -58,12 +58,13 @@ public class OrderController {
     		Model model) {
     	
     	// 이름에 있는 값 찾기
-    	// 서비스로 옮겨야함
+    	// 서비스로 옮겨야함	
     	List<Cart> list = orderItemService.getListByUserName(userName);
     	
-//    	for(int i = 0; i < list.size(); i++) {
-//    		System.out.println(list.get(i));
-//    	}
+    	if(list.isEmpty()) {
+    		
+    		cartService.register(null);
+    	}
     	
     	// 값 보내기
     	model.addAttribute("userName", userName);

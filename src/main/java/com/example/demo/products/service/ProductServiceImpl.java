@@ -7,20 +7,23 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.demo.cart.controller.CartController;
+import com.example.demo.cart.entity.Cart;
+import com.example.demo.cart.repository.CartRepository;
 import com.example.demo.products.dto.ProductsDto;
 import com.example.demo.products.entity.Products;
 import com.example.demo.products.repository.ProductRepository;
-import com.example.demo.user.repository.UserRepository;
 
 @Service
 public class ProductServiceImpl implements ProductService{
+
 	
 	@Autowired
 	ProductRepository productRepository;
+
 	
 	@Autowired
-	UserRepository userRepository;
+	CartRepository cartRepository;
+
 	
 	@Override
 	public int register(ProductsDto dto) {
@@ -76,10 +79,10 @@ public class ProductServiceImpl implements ProductService{
 				nowCount = entity.getCount();
 				if(nowCount > 0) {
 					entity.setCount(nowCount - 1);
+					System.out.println(entity.getCount());
 					productRepository.save(entity);
 					return entity.getCount();
 				}
-				return 0;
 			}
 			return 0;			
 		}
@@ -87,6 +90,38 @@ public class ProductServiceImpl implements ProductService{
 			System.out.println("error : " + e);
 			return 0;
 		}		
+	}	
+	
+	
+	@Override
+	public int countUp(int productId) {
+		try {
+			// 카트에서 물건 값을 가져옴
+			int realProductId = 0;
+			Optional<Cart> resultCart = cartRepository.findById(productId);
+			
+			if(resultCart.isPresent()) {
+				Cart entityCart = resultCart.get();
+				realProductId = entityCart.getProducts().getProductid();				
+			}
+			// 가져온 물건 아이디를 이용해서 한번 더 찾으
+			Optional<Products> result = productRepository.findById(realProductId);
+			System.out.println(result);
+			int nowCount;
+			
+			if(result.isPresent()) {
+				Products entity = result.get();
+				nowCount = entity.getCount();
+				entity.setCount(nowCount + 1);
+				productRepository.save(entity);
+				return entity.getCount();
+			}
+			return 0;	
+		}
+		catch (Exception e) {
+			System.out.println("error : " + e);
+			return 0;
+		}
 	}
 	
 	
@@ -133,25 +168,5 @@ public class ProductServiceImpl implements ProductService{
 			return null;
 		}
 		
-	}
-
-
-	
+	}	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

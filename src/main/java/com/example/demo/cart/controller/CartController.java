@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.cart.dto.CartDto;
 import com.example.demo.cart.repository.CartRepository;
 import com.example.demo.cart.service.CartService;
+import com.example.demo.order.controller.OrderController;
 import com.example.demo.products.dto.ProductsDto;
 import com.example.demo.products.entity.Products;
 import com.example.demo.products.repository.ProductRepository;
@@ -34,7 +35,7 @@ public class CartController {
 	
 	@Autowired
 	CartService cartService;
-	
+
 	@GetMapping("/cart")
 	public void cart(Model model, Principal principal) {
 		
@@ -58,18 +59,20 @@ public class CartController {
 	
 	
 	@PostMapping("/cart")
-	public String addCart(@RequestParam("productId") int productId
+	public String addCart(@RequestParam("productId") int productId, Model model
 			,Principal principal) {
 		
 	    String userName = principal.getName();
 	    
-	    Products products = productRepository.findById(productId).orElse(null);
 	    
 	    int num = productService.discount(productId);
 	    
-	    System.out.println(productId);
-	    System.out.println(products);
-	    System.out.println(num);
+	    if(num == 0) {
+	    	model.addAttribute("msg", "물건이 없습니다.");
+	    	return "/cart/cart";  	
+	    }
+	    
+	    Products products = productRepository.findById(productId).orElse(null);
 	    
 	    CartDto dto = CartDto.builder()
 	            .productsid(productId)
@@ -81,11 +84,16 @@ public class CartController {
 	    
 	    System.out.println(cartnum);
 	    
+	    model.addAttribute("msg", "장바구니 추가됨");
+	    
 	    return "redirect:/cart/cart"; // 장바구니 페이지로 이동
 	}
 	
 	@GetMapping("/remove")
 	public String remove(@RequestParam("productid") int productid) {
+		// 상품 카운트는 증가시키고
+		productService.countUp(productid);
+		// 장바구니 값은 지운다
 		cartService.remove(productid);		
 		return "redirect:/cart/cart";
 	}
