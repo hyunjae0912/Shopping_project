@@ -2,9 +2,8 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>물건 등록</title>
+  <title>물건 수정</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- 구글 아이콘 (버튼용) -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
     body {
@@ -54,34 +53,45 @@
     .input-group {
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 7px;
+      margin-bottom: 4px;
     }
-    .input-group label {
+    .input-group label,
+    .input-group p {
       font-size: 1.05rem;
       font-weight: 600;
       color: #375275;
-      margin-bottom: 3px;
       letter-spacing: 1px;
+      margin-bottom: 2px;
+      margin-top: 2px;
     }
-    .input-group input[type="text"], .input-group input[type="file"] {
+    .custom-input {
       border: 1.5px solid #d2e4f7;
       background: #fafdff;
-      padding: 11px 12px;
+      padding: 11px 14px;
       border-radius: 10px;
       font-size: 1rem;
       outline: none;
-      transition: border-color 0.18s;
+      transition: border-color 0.18s, background 0.18s;
       font-family: inherit;
+      box-sizing: border-box;
+      margin-bottom: 0;
     }
-    .input-group input:focus {
+    .custom-input:focus {
       border-color: #79c7ed;
       background: #f5fcff;
     }
-    .input-group input[type="file"] {
+    .custom-input[type="file"] {
       padding: 7px 12px;
       background: #f5f8fa;
       border-style: dashed;
       cursor: pointer;
+    }
+    .product-img-preview {
+      max-width: 150px;
+      border-radius: 12px;
+      margin: 7px 0 0 0;
+      box-shadow: 0 2px 10px 0 rgba(70,90,110,0.10);
     }
     .button-group {
       display: flex;
@@ -129,45 +139,41 @@
 </head>
 <body>
   <div class="register-container">
-    <h1>물건 등록</h1>
+    <h1>물건 수정</h1>
     <div class="divider"></div>
-    <form action="/products/register" method="post" enctype="multipart/form-data">
-
-	        <div class="input-field col s6">
-              	<input id="first-name" type="text" class="validate" name="name"  placeholder="이름 입력"
-              	th:value="${dto.name}"  required>
-              	<label for="first-name"></label>
-            </div>
-            
-            <!-- 가격 -->
-            <div class="input-field col s6">
-              <input id="last-name" type="text" class="validate" name="price"  placeholder="가격 입력"
-              th:value=${dto.price} required>
-              <label for="last-name"></label>
-             </div>
-             
-             
-             <div class="input-group">
-			  <p>기존 상품 사진</p>
-			  <img th:src="@{${dto.imgUrl}}" style="max-width: 150px;">
-			  <p>새 상품 사진 (선택)</p>
-              <input id="imgUrl" type="file" name="imgUrl" class="validate">
-			</div>
-			
-              
-              
-			<div class="input-group">
-			  <p>기존 설명 사진</p>
-			  <img th:src="@{${dto.desImg}}" style="max-width: 150px;">
-			  <p>새 설명 사진 (선택)</p>
-               <input id="desImg" type="file" name="desImg" class="validate">
-			</div>
-
-
+    <form action="/products/modify" method="post" enctype="multipart/form-data">
+      <div class="input-group">
+        <label for="name">상품 이름</label>
+        <input id="name" type="text" name="name" class="custom-input" placeholder="이름 입력"
+          th:value="${dto.name}" required>
+      </div>
+      <div class="input-group">
+        <label for="price">상품 가격</label>
+        <input id="price" type="text" name="price" class="custom-input" placeholder="가격 입력"
+          th:value="${dto.price}" required>
+      </div>
+      <div class="input-group">
+        <label for="count">상품 개수</label>
+        <input id="count" type="text" name="count" class="custom-input" placeholder="개수 입력"
+          th:value="${dto.count}" required>
+      </div>
+      <div class="input-group">
+        <label>기존 상품 사진</label>
+        <img th:src="@{${dto.imgUrl}}" alt="기존 상품 사진" class="product-img-preview">
+        <label for="imgUrl" style="margin-top:10px;">새 상품 사진 (선택)</label>
+        <input id="imgUrl" type="file" name="imgUrl" class="custom-input" accept="image/*">
+      </div>
+      <div class="input-group">
+        <label>기존 설명 사진</label>
+        <img th:src="@{${dto.desImg}}" alt="기존 설명 사진" class="product-img-preview">
+        <label for="desImg" style="margin-top:10px;">새 설명 사진 (선택)</label>
+        <input id="desImg" type="file" name="desImg" class="custom-input" accept="image/*">
+      </div>
+      <input type="hidden" name="productid" th:value="${dto.productid}" />
       <!-- 버튼 그룹 -->
       <div class="button-group">
         <button type="submit" class="btn-custom done">
-          <span class="material-icons">done</span> 등록
+          <span class="material-icons">done</span> 수정
         </button>
         <a href="/products/list" style="text-decoration:none;">
           <button type="button" class="btn-custom cancel">

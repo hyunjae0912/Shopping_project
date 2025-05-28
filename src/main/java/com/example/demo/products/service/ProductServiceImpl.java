@@ -142,6 +142,7 @@ public class ProductServiceImpl implements ProductService{
 			entity.setPrice(dto.getPrice());
 			entity.setName(dto.getName());
 			entity.setCount(dto.getCount());
+			entity.setCount(dto.getCount());
 			
 			System.out.println(entity);
 			
@@ -168,5 +169,19 @@ public class ProductServiceImpl implements ProductService{
 			return null;
 		}
 		
-	}	
+	}
+
+
+	@Override
+	public List<ProductsDto> searchByKeyword(String keyword) {
+	    // 엔티티 기준 검색
+	    List<Products> result = productRepository.findByNameContaining(keyword);
+	    List<ProductsDto> list = new ArrayList<>();
+	    
+	    list = result.stream()
+	    		.map(entity -> EntityToDto(entity))
+	    		.collect(Collectors.toList());
+	    
+	    return list;
+	}
 }

@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>SimpleShop</title>
+  <title>간단쇼핑에 오신걸 환영합니다.</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- 폰트어썸 CDN (아이콘) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -217,6 +217,57 @@
 	    background-color: black;
 	    color: white;
 	}
+	
+	
+	
+	@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+body{
+  background: #f2f2f2;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #00B4CC;
+  border-right: none;
+  padding: 5px;
+  height: 20px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+.searchButton {
+  width: 40px;
+  height: 36px;
+  border: 1px solid #00B4CC;
+  background: #00B4CC;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/*Resize the wrap to see the search bar change!*/
+.wrap{
+  width: 30%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
   </style>
   <script src="https://kit.fontawesome.com/516da99189.js" crossorigin="anonymous"></script>
 </head>
@@ -228,11 +279,20 @@
 
   <nav class="navbar">
     <div class="nav_logo">
-      <i class="fa-solid fa-star" style="color:#4fa2e2;"></i>
       <a href="/products/list">
         <img class="logo_img" src="/logo/logo.png" alt="SimpleShop 로고">
       </a>
     </div>
+    <form th:action="@{/products/list}" method="get" class="flex items-center gap-2 ml-5">
+<div class="wrap">
+   <div class="search">
+      <input type="text" class="searchTerm" placeholder="What are you looking for?">
+      <button type="submit" class="searchButton">
+        <i class="fa fa-search"></i>
+     </button>
+   </div>
+</div>
+	</form>
     <ul class="nav_menu">
       <li><a href="/">Home</a></li>
       <li><a href="/cart/cart">Cart</a></li>
@@ -270,6 +330,9 @@
 
   <div class="products">
     <h3>our new products</h3>
+    <div th:if="${list.isEmpty()}">
+    <p class="text-gray-500 text-center mt-10">검색 결과가 없습니다.</p>
+</div>
     <div class="product-list">
       <!-- 반복문 부분은 예시로 아래처럼 한 개만 둠 -->
 			<div th:each="dto : ${list}" class="product">	

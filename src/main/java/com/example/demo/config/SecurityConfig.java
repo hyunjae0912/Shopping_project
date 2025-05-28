@@ -30,6 +30,10 @@ public class SecurityConfig {
 	        // 등록은 권한이 판매자인 사람만 들어오게 하기
 	        .requestMatchers("/products/register")
 	        .hasAnyRole("SELLER")
+	        .requestMatchers("/products/modify")
+	        .hasAnyRole("SELLER")
+	        .requestMatchers("/products/remove")
+	        .hasAnyRole("SELLER")
 	        .anyRequest().permitAll();
 	    
 	    // 나중에 관리자만 들어올 수 있는 화면 하나 만드는게 나으려나?	    
@@ -43,6 +47,8 @@ public class SecurityConfig {
 	                response.sendRedirect("/");
 	            });
 	    });
+	    
+
 	    
 	    // 로그아웃 기능
 	    http.logout(logout -> logout

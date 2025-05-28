@@ -97,6 +97,7 @@
         </div>
         <!-- 버튼 -->
         <div class="flex space-x-3 pt-2">
+        <!-- 누르면 바로 카트로 가기 위한 준비 -->
 		<form action="/cart/cart" method="post">
 		  <input type="hidden" name="productId" th:value="${dto.productid}" />
 		  <button
@@ -111,15 +112,6 @@
 		    <span th:text="${dto.count == 0} ? '품절' : '장바구니'"></span>
 		  </button>
 		</form>
-		<a th:href="@{/order/register(
-		    userName=${name},
-		    totalPrice=${dto.price},
-		    productId=${dto.productid})}">
-          <button
-            class="bg-gradient-to-r from-[#54d6a5] to-[#47a6fa] hover:from-[#47a6fa] hover:to-[#54d6a5] text-white font-bold py-2 px-6 rounded-xl shadow transition">
-            <i class="fa-solid fa-bolt mr-2"></i> 바로구매
-          </button>
-          </a> 	
         </div>
       </div>
     </div>

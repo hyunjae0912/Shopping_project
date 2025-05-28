@@ -10,23 +10,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 // 일반 클래스보다 먼저 실행됨
 @Configuration
 public class WebConfig implements WebMvcConfigurer{
-	// 외부 리소스
-	String pathImg = "file:/C:\\project_shoppting\\imgUrl";
-	
-	String pathDes = "file:/C:\\project_shoppting\\desUrl";
-	// 외부 리소스 경로를 웹루트로 매핑하는 함수
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		
-		registry.addResourceHandler("/uploadImg/**").addResourceLocations(pathImg);
-		registry.addResourceHandler("/uploadDes/**").addResourceLocations(pathDes);
+		registry.addResourceHandler("/uploadImg/**").addResourceLocations("file:/C:/project_shoppting/imgUrl/");
+		registry.addResourceHandler("/uploadDes/**").addResourceLocations("file:/C:/project_shoppting/desUrl/");
+
 		
 		WebMvcConfigurer.super.addResourceHandlers(registry);
 	}
-	
-	
-
-	
 }
-	

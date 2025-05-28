@@ -31,6 +31,9 @@ public interface ProductService {
 	int countUp(int productId);
 	
 	
+	List<ProductsDto> searchByKeyword(String keyword);
+	
+	
 	default Products DtoToEntity(ProductsDto dto) {
 		
 		User user = User.builder()

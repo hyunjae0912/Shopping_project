@@ -35,17 +35,36 @@ public class ProductsController {
 	ProductRepository productRepository;
 	
 	@Autowired
+	ProductService productService;
+	
+	@Autowired
 	UserRepository userRepository;
 	
 	
 	@GetMapping("/list")
-	public void list(Model model, Principal principal) {
-	    List<ProductsDto> list = service.getList();
+	public String list(
+	    @RequestParam(value = "keyword", required = false) String keyword,
+	    Model model, Principal principal) {
+
 	    String name = (principal != null) ? principal.getName() : "게스트";
-	    
-	    System.out.println("이름 : " + name);
-	    model.addAttribute("name", name);
+	    List<ProductsDto> list;
+	    if (keyword != null && !keyword.trim().isEmpty()) {
+	        // 서비스에 검색로직 추가
+	        list = productService.searchByKeyword(keyword);
+	    } else {
+	        list = productService.getList();
+	    }
 	    model.addAttribute("list", list);
+	    model.addAttribute("name", name);
+	    model.addAttribute("keyword", keyword); // 검색어 유지용
+	    return "products/list";
+	}
+	
+	@GetMapping("/sreach")
+	public String sreachItem() {
+		
+		
+		return null;	
 	}
 	
 	
@@ -61,30 +80,31 @@ public class ProductsController {
 	
 	@GetMapping("/remove")
 	public String remove(@RequestParam(name = "no") int productid) {
-		
-		ProductsDto dto = service.read(productid);
-		
-        String realPathOldImg = 
-        "D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\" + dto.getImgUrl();
-        
-        String realPathOldDesImg =
-        "D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\" + dto.getDesImg();
-		
-        File oldImgFile = new File(realPathOldImg);
-        File oldDesFile = new File(realPathOldDesImg);
-        
-        if (oldImgFile.exists()) {
-            oldImgFile.delete();
-        }
-        
-        if(oldDesFile.exists()) {
-        	oldDesFile.delete();
-        }
-        
-		// DB에서 지우기
-		service.remove(productid);
-		return "redirect:/";
+	    ProductsDto dto = service.read(productid);
+
+	    // 실제 파일 경로는 "C:\\project_shoppting\\imgUrl\\파일명" 형식
+	    String imgFileName = new File(dto.getImgUrl()).getName();
+	    String desFileName = new File(dto.getDesImg()).getName();
+
+	    String realPathOldImg = "C:\\project_shoppting\\imgUrl\\" + imgFileName;
+	    String realPathOldDesImg = "C:\\project_shoppting\\desUrl\\" + desFileName;
+
+	    File oldImgFile = new File(realPathOldImg);
+	    File oldDesFile = new File(realPathOldDesImg);
+
+	    if (oldImgFile.exists()) {
+	        oldImgFile.delete();
+	    }
+
+	    if (oldDesFile.exists()) {
+	        oldDesFile.delete();
+	    }
+
+	    // DB에서 삭제
+	    service.remove(productid);
+	    return "redirect:/";
 	}
+
 	
 	
 	@GetMapping("/modify")
@@ -94,82 +114,73 @@ public class ProductsController {
 	}
 	
 	@PostMapping("/modify")
-	public String modifyChange(    	   
-			@RequestParam("productid") int productid,
-    		@RequestParam("name") String name, 
-    		@RequestParam("price") int price,
-    		@RequestParam("imgUrl") MultipartFile imgUrl,
-    		@RequestParam("desImg") MultipartFile desImg){
-    	
-		try {
-	    	
-	    	ProductsDto dto = service.read(productid);
-	    	
-	    	
-	    	String imgPath = dto.getImgUrl();
-	    	String desPath = dto.getDesImg();
-	        // 새 이미지가 업로드된 경우에만 처리
-	    	
+	public String modifyChange(
+	        @RequestParam("productid") int productid,
+	        @RequestParam("name") String name,
+	        @RequestParam("price") int price,
+	        @RequestParam("count") int count,
+	        @RequestParam("imgUrl") MultipartFile imgUrl,
+	        @RequestParam("desImg") MultipartFile desImg) {
+
+	    try {
+	        ProductsDto dto = service.read(productid);
+
+	        String imgPath = dto.getImgUrl();  // 기본값: 기존 이미지 경로
+	        String desPath = dto.getDesImg();  // 기본값: 기존 상세이미지 경로
+
+	        // 1. 이미지 변경 시 기존 파일 삭제 후 새 파일 저장
 	        if (imgUrl != null && !imgUrl.isEmpty()) {
-	            // 기존 파일 삭제
-	            String realPathOldImg = 
-	            		"D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\" + dto.getImgUrl();
-	            
-	            File oldImgFile = new File(realPathOldImg);
+	            // 기존 파일 삭제 (실제 파일 경로)
+	            String oldImgFilePath = "C:\\project_shoppting\\imgUrl\\" + 
+	                new File(dto.getImgUrl()).getName();
+	            File oldImgFile = new File(oldImgFilePath);
 	            if (oldImgFile.exists()) {
-	                oldImgFile.delete(); // 삭제
+	                oldImgFile.delete();
 	            }
-	            
-	            String uploadImgPath = 
-	            "D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\imgUrl\\";
-	            File saveFileImg = new File(uploadImgPath + imgUrl.getOriginalFilename());
-	            saveFileImg.getParentFile().mkdirs();
-	            imgUrl.transferTo(saveFileImg);
-
-	            imgPath = "/imgUrl/" + imgUrl.getOriginalFilename(); // 새로운 경로로 변경
+	            // 새 파일 저장
+	            String imgFileName = imgUrl.getOriginalFilename();
+	            String saveImgPath = "C:\\project_shoppting\\imgUrl\\" + imgFileName;
+	            imgUrl.transferTo(new File(saveImgPath));
+	            imgPath = "/uploadImg/" + imgFileName;
 	        }
-	        
 
+	        // 2. 설명이미지 변경 시 기존 파일 삭제 후 새 파일 저장
 	        if (desImg != null && !desImg.isEmpty()) {
-	        	// 기존 파일 삭제
-	        	String realPathOldImg = 
-	        	"D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\" + dto.getDesImg();
-	        	
-	        	File oldImgFile = new File(realPathOldImg);
-	        	if(oldImgFile.exists()) {
-	        		oldImgFile.delete();
-	        	}
-	        	
-	            String uploadDesPath = 
-	            "D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\desUrl\\";
-	            File saveFileDes = new File(uploadDesPath + desImg.getOriginalFilename());
-	            saveFileDes.getParentFile().mkdirs();
-	            desImg.transferTo(saveFileDes);
-
-	            desPath = "/desUrl/" + desImg.getOriginalFilename(); // 새로운 경로로 변경
+	            String oldDesFilePath = "C:\\project_shoppting\\desUrl\\" +
+	                new File(dto.getDesImg()).getName();
+	            File oldDesFile = new File(oldDesFilePath);
+	            if (oldDesFile.exists()) {
+	                oldDesFile.delete();
+	            }
+	            String desFileName = desImg.getOriginalFilename();
+	            String saveDesPath = "C:\\project_shoppting\\desUrl\\" + desFileName;
+	            desImg.transferTo(new File(saveDesPath));
+	            desPath = "/uploadDes/" + desFileName;
 	        }
-	        
-	        String username = dto.getUser();
-	        
-	        ProductsDto newDto = ProductsDto
-	        		.builder()
-	        		.productid(productid)	// 빠져있었음
-	        		.name(name)
-	        		.price(price)
-	        		.imgUrl(imgPath)
-	        		.desImg(desPath)
-	        		.user(username)
-	        		.build();
-	        
-	        service.modify(newDto);
-	        
-	        return "redirect:/products/list";
-		} catch (Exception e) {
-			System.out.println("error : " + e);
-			return null;
-		}
 
+	        String username = dto.getUser();
+
+	        ProductsDto newDto = ProductsDto
+	                .builder()
+	                .productid(productid)
+	                .name(name)
+	                .price(price)
+	                .imgUrl(imgPath)
+	                .desImg(desPath)
+	                .user(username)
+	                .count(count)
+	                .build();
+
+	        service.modify(newDto);
+
+	        System.out.println(count);
+	        return "redirect:/products/list";
+	    } catch (Exception e) {
+	        System.out.println("error : " + e);
+	        return null;
+	    }
 	}
+
 	
     @GetMapping("/register")
     public String registerForm(){
@@ -178,47 +189,52 @@ public class ProductsController {
 
     @PostMapping("/register")
     public String registerHandler(
-    		@RequestParam("name") String name, 
-    		@RequestParam("price") int price,
-    		@RequestParam("imgUrl") MultipartFile imgUrl,
-    		@RequestParam("desImg") MultipartFile desImg,
-    		Principal principal) throws IOException {
-    	
-    	String userNameSecurity = principal.getName();
-    	   if (!imgUrl.isEmpty() && !desImg.isEmpty()) {
-    	        // 절대 경로로 저장
-    	        String uploadimgUrl = 
-    	        "D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\imgUrl\\";
-    	        
-    	        String uploaddesImg = 
-    	    	"D:\\hyunjae\\workspace\\Shopping_Project\\src\\main\\resources\\static\\desUrl\\";
-    	    	        
-    	        
-    	        File saveFileImg = new File(uploadimgUrl + imgUrl.getOriginalFilename());
-    	        File saveFileDes = new File(uploaddesImg + desImg.getOriginalFilename());
-   	        
-    	        saveFileImg.getParentFile().mkdirs();
-    	        saveFileDes.getParentFile().mkdirs();
-    	        imgUrl.transferTo(saveFileImg);
-    	        desImg.transferTo(saveFileDes);
-    	        	
-    	        // 저장된 파일의 상대 경로를 DB에 저장
-    	        String filePathimgUrl = "/imgUrl/" + imgUrl.getOriginalFilename(); // 상대 경로로 변경
-    	        String filePathdesUrl = "/desUrl/" + desImg.getOriginalFilename();
-    	        String username = userService.read(userNameSecurity).getUserName();
-    	        
-    	        ProductsDto dto = ProductsDto
-    	        		.builder()
-    	        		.user(username)
-    	        		.name(name)
-    	        		.price(price)
-    	        		.imgUrl(filePathimgUrl)
-    	        		.desImg(filePathdesUrl)
-    	        		.build();
-    	        
-    	        service.register(dto);
-    	    }
+        @RequestParam("name") String name,
+        @RequestParam("price") int price,
+        @RequestParam("imgUrl") MultipartFile imgUrl,
+        @RequestParam("desImg") MultipartFile desImg,
+        @RequestParam("count") int count,
+        Principal principal) throws IOException {
 
-    	    return "redirect:/products/list"; // 저장 후 다시 폼으로 이동
+        String userNameSecurity = principal.getName();
+
+        if (!imgUrl.isEmpty() && !desImg.isEmpty()) {
+            // 실제 파일 저장 경로
+            String uploadImgPath = "C:\\project_shoppting\\imgUrl\\";
+            String uploadDesPath = "C:\\project_shoppting\\desUrl\\";
+
+            String imgFileName = imgUrl.getOriginalFilename();
+            String desFileName = desImg.getOriginalFilename();
+
+            File saveFileImg = new File(uploadImgPath + imgFileName);
+            File saveFileDes = new File(uploadDesPath + desFileName);
+
+            saveFileImg.getParentFile().mkdirs();
+            saveFileDes.getParentFile().mkdirs();
+
+            imgUrl.transferTo(saveFileImg);
+            desImg.transferTo(saveFileDes);
+
+            // DB에 저장할 상대경로 (리소스핸들러와 매칭)
+            String dbImgUrl = "/uploadImg/" + imgFileName;
+            String dbDesUrl = "/uploadDes/" + desFileName;
+
+            String username = userService.read(userNameSecurity).getUserName();
+
+            ProductsDto dto = ProductsDto
+                    .builder()
+                    .user(username)
+                    .name(name)
+                    .price(price)
+                    .imgUrl(dbImgUrl)
+                    .desImg(dbDesUrl)
+                    .count(count)
+                    .build();
+
+            service.register(dto);
+        }
+
+        return "redirect:/products/list";
     }
+
 }
