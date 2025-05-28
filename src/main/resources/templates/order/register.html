@@ -51,6 +51,66 @@
     @media (max-width: 900px) {
       .navbar { flex-direction: column; gap: 16px; }
     }
+    
+    
+    
+    
+.footer-coupang {
+  background: #f2f3f6;
+  border-top: 1px solid #e5e7eb;
+  padding: 36px 8vw 24px 8vw;
+  font-size: 0.96rem;
+  color: #656d78;
+  margin-top: 60px;
+}
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  color: #474d57;
+  font-weight: 500;
+}
+.footer-links a {
+  color: #333e4b;
+  text-decoration: none;
+  transition: color 0.14s;
+}
+.footer-links a:hover {
+  color: #47a6fa;
+  text-decoration: underline;
+}
+.footer-links span {
+  color: #bdbdbd;
+  font-weight: 300;
+  font-size: 0.95em;
+}
+.footer-info {
+  text-align: center;
+  line-height: 1.7;
+  font-size: 0.98em;
+}
+.footer-company b {
+  color: #21706e;
+}
+.footer-cs b {
+  color: #47a6fa;
+  margin-right: 6px;
+}
+.footer-copy {
+  margin-top: 10px;
+  font-size: 0.9em;
+  color: #adb5bd;
+}
+@media (max-width: 900px) {
+  .footer-coupang {
+    padding: 26px 4vw 18px 4vw;
+    font-size: 0.89rem;
+  }
+  .footer-links { font-size: 0.97rem; gap: 6px;}
+}
   </style>
 </head>
 <body>
@@ -116,5 +176,37 @@
       </div>
     </form>
   </div>
+  
+  <footer class="footer-coupang">
+  <div class="footer-links">
+    <a href="#">회사소개</a>
+    <span>|</span>
+    <a href="#">인재채용</a>
+    <span>|</span>
+    <a href="#">이용약관</a>
+    <span>|</span>
+    <a href="#"><b>개인정보처리방침</b></a>
+    <span>|</span>
+    <a href="#">청소년보호정책</a>
+    <span>|</span>
+    <a href="#">광고문의</a>
+    <span>|</span>
+    <a href="#">고객센터</a>
+  </div>
+  
+  <div class="footer-info">
+    <div class="footer-company">
+      <b>간단쇼핑(주)</b> | 대표: 홍길동 | 사업자등록번호: 123-45-67890<br>
+      주소: 인천광역시 남동구 구월로 123, 2층 | 통신판매업신고: 제2025-인천구월-0000호
+    </div>
+    <div class="footer-cs">
+      <b>고객센터</b> 1600-0000 (평일 09:00~18:00, 점심 12:00~13:00)
+    </div>
+    <div class="footer-copy">
+      &copy; 2025 간단쇼핑 Co., Ltd. All Rights Reserved.
+    </div>
+  </div>
+</footer>
+  
 </body>
 </html>
