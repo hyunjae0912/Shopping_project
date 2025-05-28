@@ -15,7 +15,10 @@ public interface OrderItemService {
 	
 	List<OrderItem> read(String name);
 	
-	List<Cart> getListByUserName(String userName);
+	// 판매자가 보여줄 구매자 목록들
+	List<OrderItem> readOnlySeller(String name);
+	
+	List<Cart> getListByUserName(String userName);	
 	
 	
 	default OrderItem dtoToEntity(OrderItemDto dto) {

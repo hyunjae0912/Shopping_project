@@ -220,7 +220,9 @@
 	
 	
 	
-	@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+	
+	
+		@import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
 body{
   background: #f2f2f2;
@@ -234,7 +236,7 @@ body{
 }
 
 .searchTerm {
-  width: 100%;
+  width: 500px;
   border: 3px solid #00B4CC;
   border-right: none;
   padding: 5px;
@@ -260,14 +262,7 @@ body{
   font-size: 20px;
 }
 
-/*Resize the wrap to see the search bar change!*/
-.wrap{
-  width: 30%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
+
   </style>
   <script src="https://kit.fontawesome.com/516da99189.js" crossorigin="anonymous"></script>
 </head>
@@ -283,15 +278,15 @@ body{
         <img class="logo_img" src="/logo/logo.png" alt="SimpleShop 로고">
       </a>
     </div>
-    <form th:action="@{/products/list}" method="get" class="flex items-center gap-2 ml-5">
-<div class="wrap">
-   <div class="search">
-      <input type="text" class="searchTerm" placeholder="What are you looking for?">
-      <button type="submit" class="searchButton">
-        <i class="fa fa-search"></i>
-     </button>
-   </div>
-</div>
+	<form th:action="@{/products/list}" method="get" class="flex items-center gap-2 ml-5">
+		<div class="wrap">
+		   <div class="search">
+		      <input type="text" class="searchTerm" name="keyword" placeholder="찾고 싶은 상품을 검색해보세요!">
+		      <button type="submit" class="searchButton">
+		        <i class="fa fa-search"></i>
+		     </button>
+		   </div>
+		</div>
 	</form>
     <ul class="nav_menu">
       <li><a href="/">Home</a></li>
@@ -330,9 +325,6 @@ body{
 
   <div class="products">
     <h3>our new products</h3>
-    <div th:if="${list.isEmpty()}">
-    <p class="text-gray-500 text-center mt-10">검색 결과가 없습니다.</p>
-</div>
     <div class="product-list">
       <!-- 반복문 부분은 예시로 아래처럼 한 개만 둠 -->
 			<div th:each="dto : ${list}" class="product">	

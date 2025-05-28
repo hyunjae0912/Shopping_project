@@ -42,8 +42,7 @@ public class ProductsController {
 	
 	
 	@GetMapping("/list")
-	public String list(
-	    @RequestParam(value = "keyword", required = false) String keyword,
+	public String list(@RequestParam(value = "keyword", required = false) String keyword,
 	    Model model, Principal principal) {
 
 	    String name = (principal != null) ? principal.getName() : "게스트";
@@ -60,8 +59,8 @@ public class ProductsController {
 	    return "products/list";
 	}
 	
-	@GetMapping("/sreach")
-	public String sreachItem() {
+	@GetMapping("/status")
+	public String status() {
 		
 		
 		return null;	

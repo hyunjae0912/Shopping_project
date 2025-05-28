@@ -86,75 +86,12 @@ public class OrderItemServiceImpl implements OrderItemService {
 		
 	    return list;
 	}
-	
-	
 
-
+	@Override
+	public List<OrderItem> readOnlySeller(String name) {
+		
+		List<OrderItem> list = orderItemRepository.findOrderItemsBySellerName(name);
+		
+		return list;
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

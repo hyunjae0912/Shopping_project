@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>판매자 주문목록 | SimpleShop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #b4d6ee 100%);
+    }
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 7%;
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 4px 18px 0 rgba(120,120,120,0.05);
+      position: relative;
+      z-index: 2;
+      margin-bottom: 36px;
+    }
+    .nav_logo img {
+      height: 38px;
+      vertical-align: middle;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px 0 rgba(120,120,120,0.07);
+    }
+    .nav_menu {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .nav_menu li a {
+      text-decoration: none;
+      font-size: 1.07rem;
+      font-weight: 600;
+      color: #393e46;
+      transition: color 0.18s;
+      padding: 5px 10px;
+      border-radius: 6px;
+    }
+    .nav_menu li a:hover {
+      background: #d8f5ee;
+      color: #38996d;
+    }
+    @media (max-width: 900px) {
+      .navbar { flex-direction: column; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- 네비게이션 -->
+  <nav class="navbar">
+    <div class="nav_logo">
+      <i class="fa-solid fa-star" style="color:#4fa2e2;"></i>
+      <a href="/products/list">
+        <img class="logo_img" src="/logo/logo.png" alt="SimpleShop 로고">
+      </a>
+    </div>
+    <ul class="nav_menu">
+      <li><a href="/">Home</a></li>
+      <li><a href="/cart/cart">Cart</a></li>
+      <li><a href="/products/register">Register</a></li>
+      <li><a href="/mypage/main">My Page</a></li>
+      <li><a href="/customlogin">Login</a></li>
+      <li><span class="ml-4 font-bold text-[#21706e]">환영합니다, [[${name}]]님</span></li>
+    </ul>
+  </nav>
+
+  <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-10 my-12">
+    <h2 class="text-2xl font-bold text-[#21706e] mb-8 flex items-center gap-2">
+      <i class="fa-solid fa-clipboard-list"></i> 주문 관리
+    </h2>
+
+    <div class="space-y-3">
+      <!-- 반복문 시작 -->
+      <div th:each="dto : ${list}" class="flex flex-col md:flex-row md:items-center justify-between bg-[#f7fafc] rounded-xl p-5 shadow group hover:shadow-lg transition">
+        <div class="flex items-center gap-4 flex-1 min-w-0">
+          <div class="flex flex-col">
+            <div class="flex gap-2 items-center mb-1">
+              <i class="fa-solid fa-user text-[#54d6a5]"></i>
+              <!-- 구매자 -->
+              <span class="font-semibold text-[#21706e] truncate">[[${dto.order.user.userName}]]</span>
+            </div>
+            <div class="flex gap-2 items-center mb-1">
+              <i class="fa-solid fa-box text-[#47a6fa]"></i>
+              <!-- 물건 이름 -->
+              <span class="font-semibold text-[#375275] truncate">[[${dto.products.name}]]</span>
+            </div>
+            <div class="text-gray-500 text-sm flex gap-1 items-center">
+              <i class="fa-regular fa-clock"></i>
+              <!-- 주문 시간 -->
+              <span>[[${#temporals.format(dto.order.orderDate, 'yyyy-MM-dd HH:mm:ss')}]]</span>
+            </div>
+          </div>
+        </div>
+        <!-- 상태 콤보박스 -->
+        <div class="flex-shrink-0 mt-4 md:mt-0 md:ml-7">
+		<form th:action="@{/mypage/updateStatus}" method="post" class="inline">
+		  <input type="hidden" name="orderId" th:value="${dto.order.orderId}" />
+		  <select name="status"
+		          class="order-status-select px-4 py-2 rounded-full font-bold shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#54d6a5] bg-white text-[#21706e] min-w-[120px] text-center"
+		          th:value="${dto.order.status}"
+		          onchange="this.form.submit()">
+		      <option value="결제완료" th:selected="${dto.order.status == '결제완료'}">결제완료</option>
+		      <option value="배송중" th:selected="${dto.order.status == '배송중'}">배송중</option>
+		      <option value="배송완료" th:selected="${dto.order.status == '배송완료'}">배송완료</option>
+		      <option value="취소됨" th:selected="${dto.order.status == '취소됨'}">취소됨</option>
+		  </select>
+		</form>
+        </div>
+      </div>
+      <!-- 반복문 끝 -->
+    </div>
+  </div>
+</body>
+</html>

@@ -85,7 +85,10 @@
           <a href="/logout" class="inline-block bg-gray-100 text-[#fd5f5c] font-semibold px-6 py-2 rounded-xl shadow hover:bg-[#ffd6d1] hover:text-[#fd5f5c] transition">
             <i class="fa-solid fa-right-from-bracket mr-1"></i> 로그아웃
           </a>
-          
+          <a href="/mypage/orderlist"
+		  type="button"
+		  class="bg-gradient-to-r from-[#47a6fa] to-[#2176ff] hover:from-[#2176ff] hover:to-[#47a6fa]
+		         text-white font-bold py-2 px-7 rounded-xl shadow transition text-base">주문관리</a>   
         </div>
       </div>
     </div>
@@ -94,18 +97,32 @@
       <h3 class="text-xl font-bold mb-5 text-[#375275]">주문 목록들</h3>
 		<div class="space-y-3">
 		
-		  <div th:each="dto : ${list}" class="flex items-center justify-between bg-[#f7fafc] rounded-xl p-4 shadow">
-		    <a th:href="@{/products/read(no=${dto.products.productid})}" class="flex items-center gap-4 flex-1">
-		      <img th:src="${dto.products.imgUrl}" alt="상품" class="w-16 h-16 rounded-xl border object-cover bg-white">
-		      <div>
-		        <div class="font-semibold text-[#21706e]">[[${dto.products.name}]]</div>
-		        <div class="text-gray-500 text-sm">
-		          [[${#temporals.format(dto.order.orderDate, 'yyyy-MM-dd HH:mm:ss')}]] 주문<br>
-		          [[${#numbers.formatInteger(dto.products.price, 3, 'COMMA')}]]원
-		        </div>
-		      </div>
-		    </a>
-		  </div>
+			<div th:each="dto : ${list}" class="flex items-center justify-between bg-[#f7fafc] rounded-xl p-4 shadow">
+			  <a th:href="@{/products/read(no=${dto.products.productid})}" class="flex items-center gap-4 flex-1">
+			    <img th:src="${dto.products.imgUrl}" alt="상품" class="w-16 h-16 rounded-xl border object-cover bg-white">
+			    <div>
+			      <div class="font-semibold text-[#21706e]">[[${dto.products.name}]]</div>
+			      <div class="text-gray-500 text-sm">
+			        [[${#temporals.format(dto.order.orderDate, 'yyyy-MM-dd HH:mm:ss')}]] 주문<br>
+			        [[${#numbers.formatInteger(dto.products.price, 3, 'COMMA')}]]원
+			      </div>
+			    </div>
+			  </a>
+			  <!-- 상태 라벨 (여기서부터 추가) -->
+			  <div class="ml-6 flex items-center">
+			    <span 
+			      th:text="${dto.order.status}" 
+			      th:classappend=" 
+			        ${dto.order.status} == '결제완료' ? 'bg-blue-100 text-blue-700' : 
+			        (${dto.order.status} == '배송중' ? 'bg-yellow-100 text-yellow-700' : 
+			        (${dto.order.status} == '배송완료' ? 'bg-green-100 text-green-700' : 
+			        (${dto.order.status} == '취소됨' ? 'bg-red-100 text-red-700' : 'bg-gray-200 text-gray-600')))"
+			      class="px-4 py-1 rounded-full font-bold text-sm shadow-sm min-w-[74px] text-center">
+			      상태
+			    </span>
+			  </div>
+			</div>
+
 		</div>
     </div>
   </div>
