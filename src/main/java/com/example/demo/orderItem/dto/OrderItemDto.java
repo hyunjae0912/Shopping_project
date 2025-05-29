@@ -1,7 +1,5 @@
 package com.example.demo.orderItem.dto;
 
-import com.example.demo.order.entity.Order;
-
 import lombok.*;
 
 @Getter
@@ -13,6 +11,8 @@ import lombok.*;
 public class OrderItemDto {
 	
 	int orderItemId;
+	
+	String status;
 	
 	int order;
 	

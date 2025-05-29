@@ -41,6 +41,9 @@ public class OrderItem {
 	@JoinColumn(name = "orderId")
 	Order order;
 	
+	@Column(length = 50)
+	String status;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "productid")
 	Products products;

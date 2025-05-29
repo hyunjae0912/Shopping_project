@@ -2,7 +2,8 @@ package com.example.demo.orderItem.service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Optional;
+import com.example.demo.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,8 @@ import com.example.demo.products.entity.Products;
 @Service
 public class OrderItemServiceImpl implements OrderItemService {
 
+    private final UserRepository userRepository;
+
 	@Autowired
 	CartRepository cartRepository;
 	
@@ -31,6 +34,11 @@ public class OrderItemServiceImpl implements OrderItemService {
 	
 	@Autowired
 	OrderItemRepository orderItemRepository;
+
+
+    OrderItemServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
 	
 	@Transactional
@@ -54,6 +62,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 			Products products = cart.getProducts();
 			
 			OrderItem orderItem = OrderItem.builder()
+					.status("주문 확인중")
 					.order(order)
 					.products(products)
 					.build();
@@ -93,5 +102,20 @@ public class OrderItemServiceImpl implements OrderItemService {
 		List<OrderItem> list = orderItemRepository.findOrderItemsBySellerName(name);
 		
 		return list;
+	}
+
+	@Override
+	public void updateStatus(int orderItemId, String status) {
+		
+		Optional<OrderItem> result = orderItemRepository.findById(orderItemId);
+		
+		// Optional.empty 
+		System.out.println(result);
+		
+		if(result.isPresent()) {
+			OrderItem entity = result.get();
+			entity.setStatus(status);
+			orderItemRepository.save(entity);
+		}
 	}
 }

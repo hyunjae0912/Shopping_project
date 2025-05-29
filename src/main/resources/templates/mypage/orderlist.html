@@ -159,15 +159,15 @@
         <!-- 상태 콤보박스 -->
         <div class="flex-shrink-0 mt-4 md:mt-0 md:ml-7">
 		<form th:action="@{/mypage/updateStatus}" method="post" class="inline">
-		  <input type="hidden" name="orderId" th:value="${dto.order.orderId}" />
+		  <input type="hidden" name="orderItemId" th:value="${dto.orderItemId}" />
 		  <select name="status"
 		          class="order-status-select px-4 py-2 rounded-full font-bold shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#54d6a5] bg-white text-[#21706e] min-w-[120px] text-center"
-		          th:value="${dto.order.status}"
+		          th:value="${dto.status}"
 		          onchange="this.form.submit()">
-		      <option value="결제완료" th:selected="${dto.order.status == '결제완료'}">결제완료</option>
-		      <option value="배송중" th:selected="${dto.order.status == '배송중'}">배송중</option>
-		      <option value="배송완료" th:selected="${dto.order.status == '배송완료'}">배송완료</option>
-		      <option value="취소됨" th:selected="${dto.order.status == '취소됨'}">취소됨</option>
+		      <option value="결제완료" th:selected="${dto.status == '결제완료'}">결제완료</option>
+		      <option value="배송중" th:selected="${dto.status == '배송중'}">배송중</option>
+		      <option value="배송완료" th:selected="${dto.status == '배송완료'}">배송완료</option>
+		      <option value="취소됨" th:selected="${dto.status == '취소됨'}">취소됨</option>
 		  </select>
 		</form>
         </div>

@@ -51,16 +51,16 @@ public class OrderItemController {
 		
 		model.addAttribute("name", name);
 		model.addAttribute("list", list);
-		
+			
 	}
-	
+	 
 	@PostMapping("/updateStatus")
 	public String upadteStatus(
-			@RequestParam("orderId") int orderId,
+			@RequestParam("orderItemId") int orderItemId,
 			@RequestParam("status") String status) {
 		
 		// 상태 바꿈
-		orderService.updateStatus(orderId, status);
+		service.updateStatus(orderItemId, status);
 		
 		return "redirect:/mypage/orderlist";
 		

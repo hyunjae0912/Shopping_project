@@ -22,6 +22,12 @@
         </div>
         <h1 class="text-2xl font-bold text-[#21706e]">로그인</h1>
       </div>
+            <div th:if="${param.error}" class="mb-4">
+        <div class="bg-red-50 border border-red-200 text-red-600 rounded-xl px-4 py-3 text-center text-sm font-semibold shadow-sm flex items-center justify-center gap-2">
+          <i class="fa-solid fa-circle-exclamation"></i>
+          다시 입력해주세요.
+        </div>
+      </div>
       <form action="/login" method="post" class="space-y-6">
         <div>
           <label for="username" class="block text-sm font-semibold text-gray-600 mb-1">아이디</label>

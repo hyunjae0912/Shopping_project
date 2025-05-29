@@ -20,6 +20,8 @@ public interface OrderItemService {
 	
 	List<Cart> getListByUserName(String userName);	
 	
+	void updateStatus(int orderId, String status);
+	
 	
 	default OrderItem dtoToEntity(OrderItemDto dto) {
 		
@@ -31,6 +33,7 @@ public interface OrderItemService {
 		
 		OrderItem orderItem = OrderItem
 				.builder()
+				.status(dto.getStatus())
 				.order(order)
 				.products(products)
 				.build();
@@ -45,6 +48,7 @@ public interface OrderItemService {
 		
 		OrderItemDto dto = OrderItemDto
 				.builder()
+				.status(orderItem.getStatus())
 				.order(order)
 				.products(products)
 				.build();

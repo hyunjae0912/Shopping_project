@@ -62,7 +62,6 @@ public class OrderController {
     	List<Cart> list = orderItemService.getListByUserName(userName);
     	
     	if(list.isEmpty()) {
-    		
     		cartService.register(null);
     	}
     	
