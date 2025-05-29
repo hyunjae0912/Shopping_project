@@ -58,7 +58,6 @@ public class OrderItemController {
 	public String upadteStatus(
 			@RequestParam("orderItemId") int orderItemId,
 			@RequestParam("status") String status) {
-		
 		// 상태 바꿈
 		service.updateStatus(orderItemId, status);
 		
