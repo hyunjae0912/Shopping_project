@@ -26,10 +26,10 @@ public class UserController {
 		boolean isSuccess = service.register(dto);
 		
 		if(isSuccess) {
-			System.out.println("값이 들어옴");
-			return "redirect:/";
+			System.out.println("회원가입 성공");
+			return "redirect:/home/login";
 		}
-		else {
+		else {	
 			System.out.println("실패함");
 			redirectAttributes.addFlashAttribute("msg", "아이디가 중복되어 등록에 실패");
 			return "redirect:/user/register";

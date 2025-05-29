@@ -26,6 +26,7 @@ public class UserServiceImpl implements UserService {
 			String id = dto.getUserName();
 			UserDto getDto = read(id);
 			
+			// 중복되어있는지 검사
 			if(getDto != null) {
 				System.out.println("사용중인 아이디입니다.");
 				return false;

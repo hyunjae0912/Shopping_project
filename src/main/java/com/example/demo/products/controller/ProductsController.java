@@ -61,8 +61,6 @@ public class ProductsController {
 	
 	@GetMapping("/status")
 	public String status() {
-		
-		
 		return null;	
 	}
 	
@@ -74,7 +72,7 @@ public class ProductsController {
 	    String name = (principal != null) ? principal.getName() : "게스트";
 		
 		model.addAttribute("dto", dto);
-		model.addAttribute("name", name);
+		model.addAttribute("name", name); 
 	}
 	
 	@GetMapping("/remove")

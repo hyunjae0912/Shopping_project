@@ -54,9 +54,11 @@ public class ProductServiceImpl implements ProductService{
 	
 	@Override
 	public List<ProductsDto> getList() {
+		// 전부 찾아서 
 		List<Products> result = productRepository.findAll();
 		List<ProductsDto> list = new ArrayList<>();
 		
+		// 일단 값을 보냄
 		list = result.stream()
 				.map(entity -> EntityToDto(entity))
 				.collect(Collectors.toList());

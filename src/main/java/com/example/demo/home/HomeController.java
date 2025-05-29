@@ -24,9 +24,11 @@ public class HomeController	 {
 	
     @GetMapping("/")
 	public String list(Model model, Principal principal) {
+    	// 전부 보낸 값을 받아서
 		List<ProductsDto> list = productService.getList();
 	    String name = (principal != null) ? principal.getName() : "게스트";
-	    
+	   
+	    // 리스트로 보냄
 	    System.out.println("이름 : " + name);
 		model.addAttribute("list", list);
 		model.addAttribute("name", name);
