@@ -68,10 +68,10 @@ public class ProductServiceImpl implements ProductService{
 	
 	
 	@Override
-	public int discount(int productId) {
+	public int discount(int cartId) {
 		
 		try {
-			Optional<Products> result = productRepository.findById(productId);
+			Optional<Products> result = productRepository.findById(cartId);
 			
 			System.out.println(result);
 			int nowCount;
@@ -96,11 +96,11 @@ public class ProductServiceImpl implements ProductService{
 	
 	
 	@Override
-	public int countUp(int productId) {
+	public int countUp(int cartId) {
 		try {
 			// 카트에서 물건 값을 가져옴
 			int realProductId = 0;
-			Optional<Cart> resultCart = cartRepository.findById(productId);
+			Optional<Cart> resultCart = cartRepository.findById(cartId);
 			
 			if(resultCart.isPresent()) {
 				Cart entityCart = resultCart.get();

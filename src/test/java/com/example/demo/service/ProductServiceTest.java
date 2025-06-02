@@ -19,6 +19,7 @@ public class ProductServiceTest {
 	
 	@Test
 	void 값_저장() {
+		// 값은 나중에ㅇㅇ;;
 		// 무조건 DB에 저장된 이름을 사용해야만 저장이 됨.
 		ProductsDto dto = ProductsDto.builder()
 				.name("탄산수")

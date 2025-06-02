@@ -26,9 +26,9 @@ public interface ProductService {
 	ProductsDto read(int no);
 	
 	// 물건 개수 줄이기
-	int discount(int productId);
+	int discount(int cartId);
 	
-	int countUp(int productId);
+	int countUp(int cartId);
 	
 	
 	List<ProductsDto> searchByKeyword(String keyword);

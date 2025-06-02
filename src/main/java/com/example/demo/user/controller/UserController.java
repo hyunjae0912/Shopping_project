@@ -27,7 +27,7 @@ public class UserController {
 		
 		if(isSuccess) {
 			System.out.println("회원가입 성공");
-			return "redirect:/home/login";
+			return "redirect:/products/list";
 		}
 		else {
 			System.out.println("실패함");

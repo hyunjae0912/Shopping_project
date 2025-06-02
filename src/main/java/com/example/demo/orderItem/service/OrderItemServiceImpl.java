@@ -20,9 +20,6 @@ import com.example.demo.products.entity.Products;
 
 @Service
 public class OrderItemServiceImpl implements OrderItemService {
-
-    private final UserRepository userRepository;
-
 	@Autowired
 	CartRepository cartRepository;
 	
@@ -35,10 +32,6 @@ public class OrderItemServiceImpl implements OrderItemService {
 	@Autowired
 	OrderItemRepository orderItemRepository;
 
-
-    OrderItemServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
 	
 	@Transactional
@@ -74,9 +67,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 		}
 		
 		cartRepository.deleteByUser_UserName(userName);
-		
-		
-		return null;
+		 	return null;
 	}
 	
 	// 카트에 있는 값 가져오기

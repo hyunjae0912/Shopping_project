@@ -22,13 +22,13 @@ public class UserServiceTest {
 		UserDto user = UserDto.builder()
 				.userName("둘리")
 				.password("1234")
-				.role("구매자")
+				.role("ROLE_SELLER")
 				.build();
 		
 		UserDto user2 = UserDto.builder()
 				.userName("홍길동")
-				.password("4567")
-				.role("판매자")
+				.password("1234")
+				.role("ROLE_USER")
 				.build();
 		
 		service.register(user);
@@ -38,6 +38,6 @@ public class UserServiceTest {
 	@Test
 	void 찾기() {
 		service.read("홍길동");
-	}
+	} 
 	
 }

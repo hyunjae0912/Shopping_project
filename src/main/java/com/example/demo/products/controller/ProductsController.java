@@ -123,7 +123,7 @@ public class ProductsController {
 	        ProductsDto dto = service.read(productid);
 
 	        String imgPath = dto.getImgUrl();  // 기본값: 기존 이미지 경로
-	        String desPath = dto.getDesImg();  // 기본값: 기존 상세이미지 경로
+	        String desPath = dto.getDesImg();  // 기본값: 기존 상세이미지 경로 
 
 	        // 1. 이미지 변경 시 기존 파일 삭제 후 새 파일 저장
 	        if (imgUrl != null && !imgUrl.isEmpty()) {

@@ -92,6 +92,7 @@ public class CartController {
 	@GetMapping("/remove")
 	public String remove(@RequestParam("productid") int productid) {
 		// 상품 카운트는 증가시키고
+		// 변수 이름이 잘못되어서 생긴 오해
 		productService.countUp(productid);
 		// 장바구니 값은 지운다
 		cartService.remove(productid);		
