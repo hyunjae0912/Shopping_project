@@ -21,6 +21,5 @@ public class ProductsDto {
 	
 	String desImg;
 	
-	// User user 이다 
 	String user;
 }
